@@ -1753,7 +1753,423 @@ videoFormats.forEach((format, index) => {
             {n:"19. Mitos del producto", w:"Romper falsas creencias de la industria.", r:"Cruzando los brazos, tono experto.", h:"3 Mitos sobre [Categoría de producto] que debes ignorar.", c:"Educa tu compra. Link en bio.", p:"Desmiente 3 mitos que frenan la compra de [Producto].", e:"Mito: Las sartenes de acero inoxidable siempre se pegan."},
             {n:"20. Detrás de cámaras", w:"Humanizar la marca física.", r:"Taller desordenado, diseño real.", h:"Lo que no ves de [Marca].", c:"Apoya el talento local.", p:"Narrativa para mostrar el sudor y trabajo detrás de fabricar [Producto].", e:"Proceso de teñir cuero a mano para hacer una billetera."}
         ];
+const upgradedEcommercePrompts = [
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / GENERAR DESEO / RESOLVER OBJECIÓN]
 
+Actúa como estratega de ecommerce premium. Crea un guion usando el formato "Producto en uso".
+
+Incluye:
+1. Hook visual mostrando el producto en acción desde el primer segundo.
+2. Texto de apertura en pantalla.
+3. Secuencia de tomas mostrando uso real.
+4. Beneficio funcional.
+5. Beneficio emocional.
+6. Frase de deseo.
+7. CTA de compra, DM o catálogo.
+
+Evita sonar como catálogo. Haz que el producto se vea necesario, deseable y premium.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [VENDER / GENERAR DESEO / MOSTRAR EXPERIENCIA]
+
+Actúa como estratega de ecommerce y experiencia sensorial. Crea un guion usando el formato "Unboxing sensorial".
+
+Incluye:
+1. Hook visual abriendo el paquete.
+2. Detalles sensoriales: textura, sonido, empaque, color, sorpresa.
+3. Texto de pantalla para cada momento.
+4. Voz en off breve.
+5. Momento de deseo.
+6. CTA para comprar o pedir el link.
+
+Debe hacer que la persona quiera vivir la experiencia de recibir el producto.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [CONFIANZA / PRUEBA SOCIAL / VENTA]
+
+Actúa como creador de UGC para ecommerce. Crea un guion usando el formato "UGC testimonial".
+
+Incluye:
+1. Hook natural estilo cliente real.
+2. Problema antes de usar el producto.
+3. Primera impresión.
+4. Resultado o cambio percibido.
+5. Detalle específico que volvió creíble la experiencia.
+6. Frase testimonial.
+7. CTA natural.
+
+Debe sonar humano, espontáneo y confiable, no como anuncio perfecto.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [VENDER / MOSTRAR TRANSFORMACIÓN / GENERAR CONFIANZA]
+
+Actúa como estratega de contenido ecommerce. Crea un guion usando el formato "Antes / Después".
+
+Incluye:
+1. Antes claro y honesto.
+2. Momento de transición.
+3. Después visual.
+4. Tiempo realista del cambio.
+5. Qué produjo la transformación.
+6. Hook visual comparativo.
+7. CTA para comprar o pedir recomendación.
+
+No exageres resultados. Debe sentirse real, verificable y deseable.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [INTERACCIÓN / DECISIÓN / VENTA]
+
+Actúa como estratega de ecommerce. Crea un guion usando el formato "Esto o esto".
+
+Incluye:
+1. Dos opciones de producto, color, estilo, talla o uso.
+2. Para quién conviene cada opción.
+3. Diferencia visual clara.
+4. Pregunta de interacción.
+5. Hook visual comparativo.
+6. Texto para pantalla.
+7. CTA para comentar o pedir ayuda.
+
+Debe facilitar decisión y generar comentarios.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [FILTRAR CLIENTE / VENDER / POSICIONAR CALIDAD]
+
+Actúa como copywriter de ecommerce premium. Crea un guion usando el formato "No compres esto si...".
+
+Incluye:
+1. Falsa expectativa del comprador equivocado.
+2. Perfil de cliente para quien sí es ideal.
+3. Reencuadre de valor.
+4. Beneficio diferencial.
+5. Hook verbal directo.
+6. Texto en pantalla.
+7. CTA para comprar si cumple el perfil.
+
+Debe filtrar sin sonar arrogante.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [EDUCAR / GENERAR DESEO / AUMENTAR USO]
+
+Actúa como creador de contenido para ecommerce. Crea un guion usando el formato "3 formas de usarlo".
+
+Incluye:
+1. Tres usos distintos del producto.
+2. Situación ideal para cada uso.
+3. Toma visual de cada forma.
+4. Beneficio que se activa en cada uso.
+5. Hook textual.
+6. CTA para guardar o elegir favorito.
+
+Debe mostrar versatilidad y aumentar deseo de compra.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [EDUCAR / EVITAR ERRORES / GUIAR COMPRA]
+
+Actúa como asesor experto de ecommerce. Crea un guion usando el formato "Errores al elegir X producto".
+
+Incluye:
+1. Tres errores comunes al comprar este tipo de producto.
+2. Por qué cada error cuesta dinero, tiempo o frustración.
+3. Cómo elegir mejor.
+4. Cómo tu producto resuelve esos errores.
+5. Hook visual de alerta.
+6. CTA para pedir recomendación.
+
+Debe educar antes de vender.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [TRANSPARENCIA / AUTORIDAD / VENTA]
+
+Actúa como estratega de marca ecommerce. Crea un guion usando el formato "Lo que nadie te muestra de este producto".
+
+Incluye:
+1. Detalle oculto o poco mostrado.
+2. Por qué ese detalle importa.
+3. Comparación con una opción inferior.
+4. Toma visual del detalle.
+5. Hook de curiosidad.
+6. Texto en pantalla.
+7. CTA para valorar calidad.
+
+Debe generar confianza y deseo por transparencia.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [JUSTIFICAR PRECIO / VENDER PREMIUM / EDUCAR]
+
+Actúa como copywriter de producto premium. Crea un guion usando el formato "Comparativa barato vs premium".
+
+Incluye:
+1. Diferencia visible entre opción barata y opción premium.
+2. Diferencia invisible: duración, material, experiencia o resultado.
+3. Costo real de elegir mal.
+4. Por qué el producto premium vale más.
+5. Hook visual comparativo.
+6. CTA para invertir en calidad.
+
+Debe justificar precio sin atacar a quien compra barato.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [AUTENTICIDAD / DESEO / CONFIANZA]
+
+Actúa como creador UGC. Crea un guion usando el formato "Reacción al primer uso".
+
+Incluye:
+1. Expectativa antes de probarlo.
+2. Momento exacto del primer uso.
+3. Reacción natural.
+4. Detalle que sorprende.
+5. Frase espontánea.
+6. Hook visual del primer contacto.
+7. CTA para probarlo.
+
+Debe sentirse genuino, no actuado.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [URGENCIA / VENTA / STOCK LIMITADO]
+
+Actúa como copywriter de ecommerce ético. Crea un guion usando el formato "Stock limitado".
+
+Incluye:
+1. Qué producto o variante queda limitada.
+2. Por qué se está agotando.
+3. Qué pierde la persona si espera.
+4. Prueba visual del stock.
+5. Hook de urgencia.
+6. CTA claro para comprar o preguntar disponibilidad.
+
+Genera urgencia real sin manipulación falsa.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [CONFIANZA / REALIDAD / DECISIÓN]
+
+Actúa como creador de contenido ecommerce realista. Crea un guion usando el formato "Cómo se ve en la vida real".
+
+Incluye:
+1. Producto sin filtros ni exageración.
+2. Contexto cotidiano donde se usa.
+3. Luz natural o ambiente real.
+4. Detalle que ayuda a decidir.
+5. Hook visual de realidad.
+6. Texto de pantalla.
+7. CTA para pedir recomendación.
+
+Debe reducir la duda entre expectativa y realidad.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [HUMANIZAR / VENDER / COMUNIDAD]
+
+Actúa como storyteller de ecommerce. Crea un guion usando el formato "Empaque de pedido".
+
+Incluye:
+1. Pedido que se va a empacar.
+2. Detalles del empaque.
+3. Historia breve del producto o cliente.
+4. Momento sensorial.
+5. Texto en pantalla.
+6. CTA para hacer pedido.
+
+Debe hacer que comprar se sienta como una experiencia especial.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [PRUEBA SOCIAL / COMUNIDAD / VENTA]
+
+Actúa como estratega de prueba social. Crea un guion usando el formato "Cliente usando producto".
+
+Incluye:
+1. Situación real del cliente usando el producto.
+2. Qué resultado, sensación o beneficio se observa.
+3. Texto sobreimpreso.
+4. Frase tipo testimonio.
+5. Hook visual con cliente real.
+6. CTA para etiquetar, comprar o pedir link.
+
+Debe mostrar comunidad y confianza.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [RESOLVER DUDA / CONVERTIR / GUIAR COMPRA]
+
+Actúa como asesor de ecommerce. Crea un guion usando el formato "Pregunta de talla/color/modelo".
+
+Incluye:
+1. Duda principal del comprador.
+2. Respuesta clara.
+3. Comparación visual.
+4. Recomendación según tipo de cliente.
+5. Hook textual con la pregunta.
+6. CTA para escribir por DM si necesita ayuda.
+
+Debe eliminar fricción de compra.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [ENTRETENER / GUIAR / VENDER]
+
+Actúa como curador de ecommerce. Crea un guion usando el formato "Ranking de productos".
+
+Incluye:
+1. Top 3 o top 5 productos.
+2. Criterio del ranking.
+3. Para quién es ideal cada producto.
+4. Producto ganador.
+5. Hook visual con posiciones.
+6. CTA para comentar favorito o pedir link.
+
+Debe ayudar a elegir sin parecer venta forzada.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [COMPARAR / EDUCAR / CONVERTIR]
+
+Actúa como asesor de compra. Crea un guion usando el formato "Producto vs producto".
+
+Incluye:
+1. Producto A.
+2. Producto B.
+3. Diferencia principal.
+4. Para quién conviene cada uno.
+5. Recomendación final.
+6. Hook visual con ambos productos.
+7. CTA para pedir ayuda personalizada.
+
+Debe reducir indecisión.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [EDUCAR / ROMPER MITOS / VENDER]
+
+Actúa como experto de producto. Crea un guion usando el formato "Mitos del producto".
+
+Incluye:
+1. Tres mitos comunes.
+2. Por qué cada mito es falso o incompleto.
+3. Qué debe saber la persona antes de comprar.
+4. Cómo tu producto responde mejor.
+5. Hook verbal de autoridad.
+6. CTA para comprar con información.
+
+Debe educar y aumentar confianza.`,
+
+  `PRODUCTO: [NOMBRE DEL PRODUCTO]
+TEMA O ÁNGULO: [PEGA AQUÍ TU TEMA]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+DESEO DEL CLIENTE: [RESULTADO QUE QUIERE]
+OBJECIÓN PRINCIPAL: [DUDA QUE FRENA LA COMPRA]
+OBJETIVO DEL CONTENIDO: [HUMANIZAR / CONECTAR / VENDER]
+
+Actúa como storyteller de marca ecommerce. Crea un guion usando el formato "Detrás de cámaras de empaque".
+
+Incluye:
+1. Qué proceso se va a mostrar.
+2. Detalles humanos del trabajo.
+3. Cuidado detrás del producto.
+4. Momento visual atractivo.
+5. Texto en pantalla.
+6. CTA para apoyar la marca o comprar.
+
+Debe mostrar el valor invisible detrás de cada pedido.`
+];
+
+ecommerceFormats.forEach((item, index) => {
+  const newPrompt = upgradedEcommercePrompts[index];
+  if (!newPrompt) return;
+
+  item.p = newPrompt;
+});
         // Compact High Ticket Data (15 formats)
         const htFormats = [
             {n:"1. Diagnóstico Error Caro", o:"Generar consciencia de pérdida.", w:"MoF, calentar leads.", h:"El error que te cuesta [Dinero] al mes.", c:"DM 'AUDITORÍA'.", p:"Crea guion de diagnóstico de un error estratégico profundo en [Nicho].", e:"No tener backend de ventas."},
