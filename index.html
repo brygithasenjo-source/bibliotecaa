@@ -257,6 +257,13 @@
     font-size: 1rem;
   }
 }
+        #glosario {
+  display: none;
+}
+
+#glosario.glosario-visible {
+  display: block;
+}
     </style>
 </head>
 <body>
@@ -2877,8 +2884,22 @@ function forceRenderGlossary() {
   `).join("");
 }
 
-document.addEventListener("DOMContentLoaded", forceRenderGlossary);
-forceRenderGlossary();
+function openGlossary() {
+  forceRenderGlossary();
+
+  const section = document.getElementById("glosario");
+  if (!section) return;
+
+  section.classList.add("glosario-visible");
+  section.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+document.querySelectorAll('a[href="#glosario"]').forEach(link => {
+  link.addEventListener("click", function(e) {
+    e.preventDefault();
+    openGlossary();
+  });
+});
     </script>
 </body>
 </html>
