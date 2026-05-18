@@ -426,7 +426,7 @@
                 <h3>13. Situaciones Reales</h3>
                 <p>Qué grabar según dónde estés</p>
             </div>
-            <div class="hub-card" onclick="openNewFormatLab()">
+            <div class="hub-card" onclick="openSection('sec-new-format-lab')">
   <div class="hub-icon">🧪</div>
   <h3>16. Adapta un formato nuevo</h3>
   <p>Analiza tendencias y conviértelas en formatos reutilizables</p>
@@ -653,7 +653,101 @@
             </div>
             <div class="cards-grid" id="grid-situations"></div>
         </section>
+<section id="sec-new-format-lab" class="content-section">
+  <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+  <div class="section-header">
+    <h2>Adapta cualquier formato nuevo</h2>
+    <p>Analiza una tendencia, extrae su estructura y conviértela en un formato reutilizable para tu negocio.</p>
+  </div>
 
+  <div class="prompt-lab-grid">
+    <div class="prompt-lab-card">
+      <div class="prompt-lab-step">Paso 1</div>
+      <h3>Analiza el video viral</h3>
+      <p>Copia este prompt en Gemini junto con el link, descripción o transcripción del video.</p>
+
+      <div class="prompt-box" id="analysisPromptBox">PROMPT 1 - ANALIZAR UN VIDEO VIRAL
+
+Actúa como estratega de contenido viral y analista de formatos.
+
+VIDEO A ANALIZAR:
+[PEGA AQUÍ EL LINK, TRANSCRIPCIÓN O DESCRIPCIÓN DEL VIDEO]
+
+NICHO:
+[NICHO]
+
+AUDIENCIA:
+[AUDIENCIA]
+
+Analiza el video y extrae:
+1. Hook visual del primer segundo.
+2. Hook textual si aparece texto en pantalla.
+3. Hook verbal si la persona habla.
+4. Estructura narrativa paso a paso.
+5. Duración aproximada de cada parte.
+6. Picos de interés.
+7. Patrón psicológico que hace que funcione.
+8. Emoción que activa.
+9. CTA usado o CTA sugerido.
+10. Qué elementos son replicables y cuáles dependen del creador original.
+
+No copies el contenido literal. Extrae la estructura estratégica del formato.</div>
+
+      <button class="btn btn-gold" onclick="copyFromElement('analysisPromptBox')">Copiar prompt 1</button>
+    </div>
+
+    <div class="prompt-lab-card">
+      <div class="prompt-lab-step">Paso 2</div>
+      <h3>Convierte el análisis en formato</h3>
+      <p>Después de recibir el análisis, usa este prompt para convertirlo en un formato adaptable.</p>
+
+      <div class="prompt-box" id="adaptationPromptBox">PROMPT 2 - CONVERTIR EL ANÁLISIS EN FORMATO REUTILIZABLE
+
+Actúa como estratega de contenido y creador de formatos virales.
+
+ANÁLISIS DEL VIDEO:
+[PEGA AQUÍ EL ANÁLISIS DEL PROMPT 1]
+
+MI NICHO:
+[NICHO]
+
+MI AUDIENCIA:
+[AUDIENCIA]
+
+MI OFERTA / PRODUCTO:
+[OFERTA O PRODUCTO]
+
+TEMA O IDEA BASE:
+[PEGA AQUÍ TU TEMA]
+
+OBJETIVO DEL CONTENIDO:
+[VENDER / EDUCAR / VIRALIZAR / CONECTAR / CAPTAR LEADS]
+
+Convierte ese análisis en un formato reutilizable para mi negocio.
+
+Entrega:
+1. Nombre del nuevo formato.
+2. Qué es.
+3. Para qué objetivo sirve.
+4. Ideal para qué tipo de negocio.
+5. Cuándo usarlo.
+6. Por qué funciona psicológicamente.
+7. Cómo grabarlo.
+8. Hook visual adaptable.
+9. Hook textual adaptable.
+10. Hook verbal adaptable.
+11. Estructura narrativa paso a paso.
+12. CTA recomendado.
+13. 5 ideas aplicadas a mi nicho.
+14. 3 versiones del guion: educativa, venta y viral.
+15. Errores a evitar.
+
+No copies el video original. Crea una versión estratégica, ética y adaptada a mi marca.</div>
+
+      <button class="btn btn-gold" onclick="copyFromElement('adaptationPromptBox')">Copiar prompt 2</button>
+    </div>
+  </div>
+</section>
         <!-- Section: Errors -->
         <section id="sec-errors" class="content-section">
             <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
@@ -2780,16 +2874,21 @@ upgradeEcommercePrompts();
            ======================================================================= */
         
         function openSection(id) {
-            // Hide all sections
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            // Hide hero/hub logic for clean view
-            document.getElementById('hero').style.display = 'none';
-            document.getElementById('hub').style.display = 'none';
-            // Show target
-            const target = document.getElementById(id);
-            target.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+  const target = document.getElementById(id);
+
+  if (!target) {
+    console.warn("No existe la sección:", id);
+    return;
+  }
+
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+
+  document.getElementById('hero').style.display = 'none';
+  document.getElementById('hub').style.display = 'none';
+
+  target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
         function closeSection() {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
@@ -3071,16 +3170,6 @@ Entrega:
 
 No copies el video original. Crea una versión estratégica, ética y adaptada a mi marca.`;
 
-function openNewFormatLab() {
-  let section = document.getElementById("sec-new-format-lab");
-
-  if (!section) {
-    const main = document.querySelector("main") || document.body;
-    section = document.createElement("section");
-    section.id = "sec-new-format-lab";
-    section.className = "content-section";
-    main.appendChild(section);
-  }
 
   section.innerHTML = `
     <div class="container">
@@ -3244,6 +3333,11 @@ No copies el video original. Crea una versión estratégica, ética y adaptada a
   setTimeout(() => {
     section.scrollIntoView({ behavior: "smooth", block: "start" });
   }, 50);
+}
+        function copyFromElement(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  copyText(el.innerText);
 }
     </script>
 </body>
