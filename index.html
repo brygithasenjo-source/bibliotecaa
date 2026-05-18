@@ -436,7 +436,7 @@
                 <h3>14. Errores a Evitar</h3>
                 <p>Lo que destruye tu conversión</p>
             </div>
-            <div class="hub-card" onclick="openGlossary()">
+            <div class="hub-card" onclick="openSection('sec-glossary')">
   <div class="hub-icon">📖</div>
   <h3>15. Glosario</h3>
   <p>Diccionario de términos Prime Scale</p>
@@ -2874,14 +2874,22 @@ upgradeEcommercePrompts();
            ======================================================================= */
         
         function openSection(id) {
+  const target = document.getElementById(id);
+
+  if (!target) {
+    console.error("No existe esta sección:", id);
+    return;
+  }
+
   document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
 
-  document.getElementById('hero').style.display = 'none';
-  document.getElementById('hub').style.display = 'none';
+  const hero = document.getElementById('hero');
+  const hub = document.getElementById('hub');
 
-  const target = document.getElementById(id);
+  if (hero) hero.style.display = 'none';
+  if (hub) hub.style.display = 'none';
+
   target.classList.add('active');
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -3103,7 +3111,13 @@ function openGlossary() {
   copyText(el.innerText);
 }
 
-window.onload = initApp;
+window.onload = function() {
+  try {
+    initApp();
+  } catch (error) {
+    console.error("Error en initApp:", error);
+  }
+};
     </script>
 </body>
 </html>
