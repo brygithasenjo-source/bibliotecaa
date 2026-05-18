@@ -1727,15 +1727,7 @@ videoFormats.forEach((format, index) => {
   const newPrompt = upgradedVideoFormatPrompts[index];
   if (!newPrompt) return;
 
-  format.prompt = newPrompt;
   format.p = newPrompt;
-  format.pr = newPrompt;
-  format.aiPrompt = newPrompt;
-  format.promptIA = newPrompt;
-
-  if (Array.isArray(format)) {
-    format[13] = newPrompt;
-  }
 });
 
         // Compact Ecommerce Data (20 formats)
