@@ -1,0 +1,2281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Scale Viral Formats Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #FFFDF8;
+            --gold-main: #C8A44D;
+            --gold-soft: #E8D8A8;
+            --beige: #F7EFE3;
+            --nude: #F3DDD0;
+            --black-soft: #1F1F1F;
+            --text-gray: #5F5F5F;
+            --white: #FFFFFF;
+            --shadow-sm: 0 4px 12px rgba(200, 164, 77, 0.05);
+            --shadow-md: 0 12px 24px rgba(31, 31, 31, 0.08);
+            --shadow-lg: 0 24px 48px rgba(0, 0, 0, 0.12);
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 30px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-main); color: var(--black-soft); line-height: 1.6; overflow-x: hidden; }
+
+        h1, h2, h3, h4, h5 { font-weight: 700; color: var(--black-soft); line-height: 1.3; }
+        p { color: var(--text-gray); font-size: 0.95rem; }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--beige);
+            box-shadow: var(--shadow-sm);
+        }
+        .header-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .header-logo img { height: 40px; border-radius: 8px; }
+        .header-logo h1 { font-size: 1.1rem; color: var(--gold-main); font-weight: 600; }
+        
+        nav ul { display: flex; gap: 24px; list-style: none; }
+        nav a { text-decoration: none; color: var(--black-soft); font-weight: 500; font-size: 0.9rem; transition: var(--transition); cursor: pointer; }
+        nav a:hover { color: var(--gold-main); }
+
+        .hero {
+            padding: 5rem 5% 4rem;
+            text-align: center;
+            background: radial-gradient(circle at top center, var(--white) 0%, var(--bg-main) 100%);
+            border-bottom: 1px solid var(--beige);
+        }
+        .hero img { height: 80px; margin-bottom: 1.5rem; border-radius: 12px; box-shadow: var(--shadow-sm); }
+        .hero h2 { font-size: 2.8rem; margin-bottom: 1rem; max-width: 800px; margin-inline: auto; letter-spacing: -0.5px; }
+        .hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 2.5rem; }
+        
+        .hero-btns { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 0.8rem 1.8rem; border-radius: var(--radius-lg); font-weight: 600;
+            font-size: 0.9rem; cursor: pointer; transition: var(--transition); border: none;
+        }
+        .btn-gold { background: var(--gold-main); color: var(--white); box-shadow: 0 4px 15px rgba(200,164,77,0.3); }
+        .btn-gold:hover { transform: translateY(-2px); background: #b59242; box-shadow: 0 6px 20px rgba(200,164,77,0.4); }
+        .btn-outline { background: transparent; color: var(--black-soft); border: 1px solid var(--gold-soft); }
+        .btn-outline:hover { background: var(--beige); border-color: var(--gold-main); }
+        .btn-sm { padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: var(--radius-sm); }
+        .btn-close-section { background: var(--black-soft); color: var(--white); margin-bottom: 2rem; border-radius: var(--radius-lg); }
+
+        .hub-container { padding: 4rem 5%; max-width: 1400px; margin: 0 auto; }
+        .hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        
+        .hub-card {
+            background: var(--white); border: 1px solid var(--beige); border-radius: var(--radius-md);
+            padding: 2rem 1.5rem; text-align: center; cursor: pointer; transition: var(--transition);
+            box-shadow: var(--shadow-sm); display: flex; flex-direction: column; align-items: center; gap: 1rem;
+        }
+        .hub-card:hover { transform: translateY(-5px); border-color: var(--gold-soft); box-shadow: var(--shadow-md); }
+        .hub-icon { font-size: 2.5rem; background: var(--bg-main); width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid var(--beige); color: var(--gold-main); }
+        .hub-card h3 { font-size: 1.15rem; }
+        .hub-card p { font-size: 0.85rem; flex-grow: 1; }
+
+        .content-section { display: none; padding: 4rem 5%; max-width: 1400px; margin: 0 auto; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .content-section.active { display: block; }
+        .section-header { margin-bottom: 3rem; text-align: center; }
+        .section-header h2 { font-size: 2.2rem; color: var(--gold-main); margin-bottom: 0.5rem; }
+        .section-header p { font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+
+        /* Grids for Internal Content */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        
+        .data-card {
+            background: var(--white); border-radius: var(--radius-md); padding: 2rem;
+            border: 1px solid var(--beige); box-shadow: var(--shadow-sm); transition: var(--transition);
+            display: flex; flex-direction: column;
+        }
+        .data-card:hover { border-color: var(--gold-soft); box-shadow: var(--shadow-md); }
+        .card-tag { background: var(--beige); color: var(--gold-main); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; align-self: flex-start; margin-bottom: 1rem; }
+        .data-card h4 { font-size: 1.2rem; margin-bottom: 0.8rem; }
+        .data-card .meta { font-size: 0.85rem; color: var(--text-gray); margin-bottom: 1.5rem; flex-grow: 1; }
+        .card-actions { display: flex; gap: 10px; margin-top: auto; flex-wrap: wrap; }
+
+        /* Accordions & Lists */
+        .accordion { background: var(--white); border: 1px solid var(--beige); border-radius: var(--radius-sm); margin-bottom: 1rem; overflow: hidden; }
+        .accordion-head { padding: 1.2rem 1.5rem; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; align-items: center; background: var(--bg-main); transition: var(--transition); }
+        .accordion-head:hover { background: var(--beige); color: var(--gold-main); }
+        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: var(--white); }
+        .accordion.open .accordion-body { max-height: 5000px; padding: 1.5rem; border-top: 1px solid var(--beige); }
+
+        .copy-row { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-main); border: 1px solid var(--beige); border-radius: var(--radius-sm); margin-bottom: 0.8rem; gap: 15px; }
+        .copy-text { font-size: 0.95rem; font-weight: 500; color: var(--black-soft); }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(31, 31, 31, 0.5); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content { background: var(--bg-main); width: 100%; max-width: 900px; max-height: 90vh; border-radius: var(--radius-md); display: flex; flex-direction: column; box-shadow: var(--shadow-lg); transform: translateY(20px); transition: transform 0.3s; }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        
+        .modal-header { padding: 1.5rem 2rem; background: var(--white); border-bottom: 1px solid var(--beige); display: flex; justify-content: space-between; align-items: flex-start; border-radius: var(--radius-md) var(--radius-md) 0 0; }
+        .modal-close { background: var(--beige); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; color: var(--gold-main); cursor: pointer; display: flex; justify-content: center; align-items: center; transition: var(--transition); }
+        .modal-close:hover { background: var(--gold-main); color: var(--white); transform: rotate(90deg); }
+        
+        .modal-body { padding: 2rem; overflow-y: auto; flex-grow: 1; }
+        .m-grid-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .m-info-box { background: var(--white); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--beige); }
+        .m-info-box span { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--gold-main); font-weight: 700; margin-bottom: 4px; }
+        .m-info-box strong { font-size: 0.9rem; color: var(--black-soft); }
+
+        .m-block { background: var(--white); padding: 1.5rem; border-radius: var(--radius-sm); border: 1px solid var(--beige); margin-bottom: 1.5rem; }
+        .m-block h4 { color: var(--gold-main); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; font-size: 1.1rem; }
+        .m-block ul { padding-left: 1.2rem; margin-top: 0.5rem; }
+        .m-block li { margin-bottom: 0.5rem; font-size: 0.95rem; }
+        
+        .prompt-box { background: var(--black-soft); color: var(--white); padding: 1.5rem; border-radius: var(--radius-sm); font-family: monospace; font-size: 0.9rem; white-space: pre-wrap; line-height: 1.5; margin: 1rem 0; border: 1px solid #333; }
+        .modal-footer { padding: 1.5rem 2rem; background: var(--white); border-top: 1px solid var(--beige); display: flex; gap: 15px; border-radius: 0 0 var(--radius-md) var(--radius-md); flex-wrap: wrap; }
+
+        /* Builder */
+        .builder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; background: var(--white); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--beige); margin-bottom: 2rem; }
+        .input-group label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-gray); margin-bottom: 0.5rem; text-transform: uppercase; }
+        .input-group select { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--beige); border-radius: var(--radius-sm); background: var(--bg-main); font-size: 0.95rem; color: var(--black-soft); outline: none; transition: var(--transition); }
+        .input-group select:focus { border-color: var(--gold-main); }
+        #builder-result { display: none; margin-top: 2rem; animation: fadeIn 0.5s ease; }
+
+        /* Toast */
+        .toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background: var(--black-soft); color: var(--gold-soft); padding: 1rem 2rem; border-radius: var(--radius-lg); font-weight: 500; font-size: 0.9rem; box-shadow: var(--shadow-lg); transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 3000; border: 1px solid #333; }
+        .toast.show { bottom: 40px; }
+
+        /* Footer */
+        footer { background: var(--black-soft); color: var(--white); text-align: center; padding: 4rem 5%; margin-top: 4rem; }
+        footer img { height: 50px; margin-bottom: 1.5rem; filter: brightness(0) invert(1); opacity: 0.9; }
+        footer p { color: #aaa; margin-bottom: 1rem; max-width: 500px; margin-inline: auto; font-size: 0.95rem; }
+        .signature { color: var(--gold-main); font-weight: 700; font-size: 1.1rem; margin-top: 2rem; display: block; }
+        .sub-signature { font-size: 0.8rem; color: #888; }
+
+        /* Responsive Mobile First */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; padding: 1rem; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .hero h2 { font-size: 2.2rem; }
+            .hub-grid, .cards-grid { grid-template-columns: 1fr; }
+            .modal-footer { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-logo" onclick="closeSection()">
+            <img src="https://i.ibb.co/NdfBXTyC/Chat-GPT-Image-14-may-2026-01-35-23-p-m.png" alt="Prime Scale Logo">
+            <h1>Prime Scale Viral Formats Library</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a onclick="closeSection()">Inicio</a></li>
+                <li><a onclick="document.getElementById('hub').scrollIntoView()">Secciones</a></li>
+                <li><a onclick="openSection('sec-builder')">Constructor</a></li>
+                <li><a onclick="openSection('sec-glossary')">Glosario</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero" id="hero">
+        <img src="https://i.ibb.co/NdfBXTyC/Chat-GPT-Image-14-may-2026-01-35-23-p-m.png" alt="Logo Hero">
+        <h2>Biblioteca Estratégica de Formatos Virales</h2>
+        <p>Biblioteca estratégica de formatos, hooks y prompts para crear contenido viral, vender y posicionarte con intención.</p>
+        <div class="hero-btns">
+            <button class="btn btn-gold" onclick="openSection('sec-video-formats')">Ver Formatos de Video</button>
+            <button class="btn btn-outline" onclick="openSection('sec-hooks')">Ver Hooks</button>
+            <button class="btn btn-outline" onclick="openSection('sec-prompts')">Ver Prompts</button>
+            <button class="btn btn-outline" onclick="openSection('sec-builder')">Crear Fórmula</button>
+        </div>
+    </div>
+
+    <main id="hub" class="hub-container">
+        <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+            <h2 style="font-size: 1.8rem;">Hub Estratégico</h2>
+            <p style="margin:0;">Selecciona una categoría para desplegar su contenido.</p>
+        </div>
+        
+        <div class="hub-grid">
+            <div class="hub-card" onclick="openSection('sec-video-formats')">
+                <div class="hub-icon">🎥</div>
+                <h3>1. Formatos de Video</h3>
+                <p>50 estructuras comprobadas con prompts</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-hooks')">
+                <div class="hub-icon">🪝</div>
+                <h3>2. Banco de Hooks</h3>
+                <p>Ganchos textuales por categoría</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-ctas')">
+                <div class="hub-icon">🎯</div>
+                <h3>3. Banco de CTAs</h3>
+                <p>Llamados a la acción para convertir</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-prompts')">
+                <div class="hub-icon">🤖</div>
+                <h3>4. Prompts para IA</h3>
+                <p>Ingeniería de prompts listos para copiar</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-ecommerce')">
+                <div class="hub-icon">🛍️</div>
+                <h3>5. Ecommerce</h3>
+                <p>20 formatos para productos físicos</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-highticket')">
+                <div class="hub-icon">💎</div>
+                <h3>6. High Ticket</h3>
+                <p>15 formatos para servicios premium</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-faceless')">
+                <div class="hub-icon">🎭</div>
+                <h3>7. Faceless</h3>
+                <p>20 formatos sin mostrar el rostro</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-objectives')">
+                <div class="hub-icon">🧭</div>
+                <h3>8. Por Objetivo</h3>
+                <p>Formatos según lo que quieras lograr</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-visual-hooks')">
+                <div class="hub-icon">👁️</div>
+                <h3>9. Ganchos Visuales</h3>
+                <p>Retención en los primeros 3 segundos</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-peaks')">
+                <div class="hub-icon">📈</div>
+                <h3>10. Picos de Interés</h3>
+                <p>Frases para reactivar la atención</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-structures')">
+                <div class="hub-icon">🏗️</div>
+                <h3>11. Estructuras Narrativas</h3>
+                <p>12 guiones paso a paso</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-builder')">
+                <div class="hub-icon">🧪</div>
+                <h3>12. Constructor Prime</h3>
+                <p>Crea tu fórmula estratégica al instante</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-situations')">
+                <div class="hub-icon">📍</div>
+                <h3>13. Situaciones Reales</h3>
+                <p>Qué grabar según dónde estés</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-errors')">
+                <div class="hub-icon">❌</div>
+                <h3>14. Errores a Evitar</h3>
+                <p>Lo que destruye tu conversión</p>
+            </div>
+            <div class="hub-card" onclick="openSection('sec-glossary')">
+                <div class="hub-icon">📖</div>
+                <h3>15. Glosario</h3>
+                <p>Diccionario de términos Prime Scale</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Contenedor donde se inyectarán dinámicamente las secciones -->
+    <div id="dynamic-sections-container">
+        
+        <!-- Section: Video Formats -->
+        <section id="sec-video-formats" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Formatos de Video</h2>
+                <p>50 estructuras maestras. Haz clic en "Ver estructura" para acceder a la psicología, el guion y el prompt.</p>
+            </div>
+            <div class="cards-grid" id="grid-video-formats"></div>
+        </section>
+
+        <!-- Section: Formats by Objective -->
+        <section id="sec-objectives" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Formatos por Objetivo</h2>
+                <p>Despliega lo que quieres lograr hoy y copia la lista de recomendaciones.</p>
+            </div>
+            <div id="acc-objectives"></div>
+        </section>
+
+        <!-- Section: Ecommerce -->
+        <section id="sec-ecommerce" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Formatos Ecommerce</h2>
+                <p>20 estructuras diseñadas para vender productos físicos generando deseo visual y escasez.</p>
+            </div>
+            <div class="cards-grid" id="grid-ecommerce"></div>
+        </section>
+
+        <!-- Section: High Ticket -->
+        <section id="sec-highticket" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Formatos High Ticket</h2>
+                <p>15 estructuras para coaches, consultores y agencias. Vende autoridad y cierra servicios premium.</p>
+            </div>
+            <div class="cards-grid" id="grid-highticket"></div>
+        </section>
+
+        <!-- Section: Faceless -->
+        <section id="sec-faceless" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Formatos Faceless</h2>
+                <p>20 formas de crear contenido magnético sin mostrar tu rostro en cámara.</p>
+            </div>
+            <div class="m-block" style="background: var(--beige); border-color: var(--gold-main);">
+                <h4 style="color: var(--black-soft);">📍 Bloque Especial: Si estás en la playa y no quieres mostrar rostro</h4>
+                <ul>
+                    <li>B-roll del mar + reflexión profunda.</li>
+                    <li>Pies caminando en la arena + texto sobre proceso.</li>
+                    <li>Mano con celular trabajando + CTA a DM.</li>
+                    <li>Libreta + idea estratégica escrita a mano.</li>
+                    <li>Encuesta en storie sobre un deseo/problema frente al paisaje.</li>
+                </ul>
+            </div>
+            <div class="cards-grid" id="grid-faceless"></div>
+        </section>
+
+        <!-- Section: Hooks -->
+        <section id="sec-hooks" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Banco de Hooks Textuales y Verbales</h2>
+                <p>Las frases exactas para captar la atención en los primeros 3 segundos.</p>
+            </div>
+            <div id="acc-hooks"></div>
+        </section>
+
+        <!-- Section: CTAs -->
+        <section id="sec-ctas" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Banco de Llamados a la Acción (CTAs)</h2>
+                <p>Dirige a tu audiencia con intención para maximizar conversiones.</p>
+            </div>
+            <div id="acc-ctas"></div>
+        </section>
+
+        <!-- Section: Visual Hooks -->
+        <section id="sec-visual-hooks" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Banco de Ganchos Visuales</h2>
+                <p>Acciones físicas para detener el scroll de forma visual.</p>
+            </div>
+            <div id="acc-visual-hooks"></div>
+        </section>
+
+        <!-- Section: Peaks -->
+        <section id="sec-peaks" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Banco de Picos de Interés</h2>
+                <p>Frases estratégicas para reactivar la atención a mitad del video.</p>
+            </div>
+            <div id="acc-peaks"></div>
+        </section>
+
+        <!-- Section: Structures -->
+        <section id="sec-structures" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Estructuras Narrativas Maestras</h2>
+                <p>El esqueleto psicológico detrás de un buen guion.</p>
+            </div>
+            <div id="acc-structures"></div>
+        </section>
+
+        <!-- Section: Prompts -->
+        <section id="sec-prompts" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Prompts Maestros para IA</h2>
+                <p>Copia y pega en tu inteligencia artificial favorita (ChatGPT, Claude) para generar guiones premium.</p>
+            </div>
+            <div id="acc-prompts"></div>
+        </section>
+
+        <!-- Section: Builder -->
+        <section id="sec-builder" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Constructor Prime Scale</h2>
+                <p>Combina tus variables y genera tu receta estratégica al instante.</p>
+            </div>
+            <div class="builder-grid">
+                <div class="input-group">
+                    <label>Objetivo</label>
+                    <select id="b-obj">
+                        <option value="Vender">Vender</option>
+                        <option value="Viralizar">Viralizar</option>
+                        <option value="Educar">Educar</option>
+                        <option value="Conectar">Conectar</option>
+                        <option value="Captar leads">Captar leads</option>
+                        <option value="Mostrar autoridad">Mostrar autoridad</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Formato</label>
+                    <select id="b-fmt">
+                        <option value="Frente a cámara">Frente a cámara</option>
+                        <option value="Faceless">Faceless</option>
+                        <option value="Carrusel">Carrusel</option>
+                        <option value="Ecommerce">Ecommerce</option>
+                        <option value="High ticket">High ticket</option>
+                        <option value="Historias">Historias</option>
+                        <option value="B-roll">B-roll</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Energía</label>
+                    <select id="b-eng">
+                        <option value="Elegante">Elegante</option>
+                        <option value="Directa">Directa</option>
+                        <option value="Íntima">Íntima</option>
+                        <option value="Polémica suave">Polémica suave</option>
+                        <option value="Educativa">Educativa</option>
+                        <option value="Divertida">Divertida</option>
+                        <option value="Premium">Premium</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>CTA Final</label>
+                    <select id="b-cta">
+                        <option value="Guardar">Guardar</option>
+                        <option value="Comentar">Comentar</option>
+                        <option value="DM">DM</option>
+                        <option value="Comprar">Comprar</option>
+                        <option value="Descargar recurso">Descargar recurso</option>
+                        <option value="Agendar llamada">Agendar llamada</option>
+                        <option value="Entrar a comunidad">Entrar a comunidad</option>
+                    </select>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button class="btn btn-gold" onclick="buildFormula()">Generar Fórmula Estratégica ✨</button>
+            </div>
+
+            <div id="builder-result">
+                <div class="m-block" style="border-color: var(--gold-main);">
+                    <h3 style="color: var(--gold-main); margin-bottom: 1rem;">Tu Receta Prime Scale</h3>
+                    <p><strong>Formato Recomendado:</strong> <span id="r-fmt">...</span></p>
+                    <p><strong>Hook Visual:</strong> <span id="r-hvis">...</span></p>
+                    <p><strong>Hook Textual:</strong> <span id="r-htex">...</span></p>
+                    <p><strong>Hook Verbal:</strong> <span id="r-hver">...</span></p>
+                    <p><strong>Estructura:</strong> <span id="r-str">...</span></p>
+                    <p><strong>CTA:</strong> <span id="r-cta">...</span></p>
+                    
+                    <h4 style="margin-top: 1.5rem; color:var(--black-soft);">Prompt para IA:</h4>
+                    <div class="prompt-box" id="r-prompt">...</div>
+                    <button class="btn btn-sm btn-outline" onclick="copyText(document.getElementById('r-prompt').innerText)">Copiar Prompt</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Situations -->
+        <section id="sec-situations" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Situaciones Reales</h2>
+                <p>¿No sabes qué grabar en este momento? Selecciona tu situación actual.</p>
+            </div>
+            <div class="cards-grid" id="grid-situations"></div>
+        </section>
+
+        <!-- Section: Errors -->
+        <section id="sec-errors" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Errores que destruyen conversiones</h2>
+                <p>Audita tu contenido y evita estos bloqueos.</p>
+            </div>
+            <div id="acc-errors"></div>
+        </section>
+
+        <!-- Section: Glossary -->
+        <section id="sec-glossary" class="content-section">
+            <button class="btn btn-close-section" onclick="closeSection()">← Volver al Hub</button>
+            <div class="section-header">
+                <h2>Glosario Prime Scale</h2>
+                <p>El diccionario del creador de contenido estratégico.</p>
+            </div>
+            <div id="acc-glossary"></div>
+        </section>
+
+    </div>
+
+    <!-- Modal Premium para Formatos (Video, Ecom, HT, Faceless) -->
+    <div class="modal-overlay" id="formatModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2 id="fm-title" style="color: var(--gold-main); font-size: 1.8rem; margin-bottom: 5px;">Título</h2>
+                    <span id="fm-cat" class="card-tag" style="margin:0;">Categoría</span>
+                </div>
+                <button class="modal-close" onclick="closeModal('formatModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="m-grid-info">
+                    <div class="m-info-box"><span>🎯 Objetivo</span><strong id="fm-obj">...</strong></div>
+                    <div class="m-info-box"><span>👤 Ideal para</span><strong id="fm-idl">...</strong></div>
+                    <div class="m-info-box"><span>⚖️ Dificultad</span><strong id="fm-dif">...</strong></div>
+                    <div class="m-info-box"><span>⏱️ Cuándo usar</span><strong id="fm-whe">...</strong></div>
+                </div>
+
+                <div class="m-block">
+                    <h4>🧠 Por qué funciona psicológicamente</h4>
+                    <p id="fm-psy">...</p>
+                </div>
+
+                <div class="m-block">
+                    <h4>🎥 Grabación y Ganchos (Hooks)</h4>
+                    <p style="margin-bottom: 10px;"><strong>Cómo grabarlo:</strong> <span id="fm-rec">...</span></p>
+                    <ul>
+                        <li><strong>Hook Visual (0-3s):</strong> <span id="fm-hv">...</span></li>
+                        <li><strong>Hook Textual:</strong> <span id="fm-ht">...</span></li>
+                        <li><strong>Hook Verbal:</strong> <span id="fm-hb">...</span></li>
+                    </ul>
+                </div>
+
+                <div class="m-block">
+                    <h4>🏗️ Estructura Narrativa</h4>
+                    <div id="fm-str" style="white-space: pre-line; color: var(--text-gray); margin-bottom: 15px;">...</div>
+                    <div style="background: var(--bg-main); padding: 1rem; border-radius: 8px; border: 1px solid var(--beige);">
+                        <strong>🎯 CTA Recomendado:</strong> <span id="fm-cta" style="color: var(--gold-main); font-weight: 600;">...</span>
+                    </div>
+                </div>
+
+                <div class="m-block" style="background: var(--bg-main);">
+                    <h4>🌟 Caso Práctico</h4>
+                    <p style="margin-bottom: 10px;"><strong>Ejemplo aplicado:</strong> <span id="fm-ej">...</span></p>
+                    <p style="color: #c0392b;"><strong>❌ Error a evitar:</strong> <span id="fm-err">...</span></p>
+                </div>
+
+                <div class="m-block" style="border-color: var(--black-soft);">
+                    <h4>🤖 Prompt Listo para IA</h4>
+                    <p style="font-size: 0.85rem;">Copia esto en ChatGPT/Claude para generar tu guion personalizado:</p>
+                    <div class="prompt-box" id="fm-prm">...</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-gold" onclick="copyText(document.getElementById('fm-prm').innerText)">Copiar Prompt</button>
+                <button class="btn btn-outline" onclick="copyText(document.getElementById('fm-str').innerText)">Copiar Estructura</button>
+                <button class="btn btn-outline" onclick="closeModal('formatModal')">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Situaciones -->
+    <div class="modal-overlay" id="sitModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2 id="sm-title" style="color: var(--gold-main); font-size: 1.5rem;">Situación</h2>
+                <button class="modal-close" onclick="closeModal('sitModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="m-block">
+                    <h4>📌 Formatos Recomendados</h4>
+                    <ul id="sm-fmt">...</ul>
+                </div>
+                <div class="m-block">
+                    <h4>👁️ Hook Visual</h4>
+                    <p id="sm-hv">...</p>
+                </div>
+                <div class="m-block">
+                    <h4>🗣️ Texto de apertura</h4>
+                    <p id="sm-txt">...</p>
+                </div>
+                <div class="m-block">
+                    <h4>🎯 CTA Sugerido</h4>
+                    <p id="sm-cta" style="color: var(--gold-main); font-weight: 600;">...</p>
+                </div>
+                <div class="m-block" style="border-color: var(--black-soft);">
+                    <h4>🤖 Prompt para salir del apuro</h4>
+                    <div class="prompt-box" id="sm-prm">...</div>
+                    <button class="btn btn-sm btn-gold" onclick="copyText(document.getElementById('sm-prm').innerText)">Copiar Prompt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Copiado al portapapeles ✨</div>
+
+    <footer>
+        <img src="https://i.ibb.co/NdfBXTyC/Chat-GPT-Image-14-may-2026-01-35-23-p-m.png" alt="Prime Scale Logo">
+        <p>Biblioteca creada para transformar ideas en contenido estratégico, viral y vendible.</p>
+        <span class="signature">Creado por Brygith Asenjo</span>
+        <span class="sub-signature">Psicóloga de Negocios y Estratega | Fundadora de Prime Scale</span>
+    </footer>
+
+    <script>
+        /* =======================================================================
+           DATA ARCHITECTURE - COMPRESSED FOR EFFICIENCY BUT COMPLETE
+           All 50 Formats + 20 Ecom + 15 HT + 20 Faceless + Banks + Prompts + Situations
+           Keys mapped for modal: 
+           n: Name, c: Category, d: Difficulty, o: Objective, i: Ideal for, 
+           w: When to use, psy: Psychology, r: Recording, hv: Hook Visual, 
+           ht: Hook Text, hb: Hook Verbal, s: Structure, cta: CTA, 
+           p: Prompt, ej: Example, err: Error
+           ======================================================================= */
+        
+        // Helper function to generate data objects quickly
+        function makeFmt(n, c, d, o, i, w, psy, r, hv, ht, hb, s, cta, p, ej, err) {
+            return { n, c, d, o, i, w, psy, r, hv, ht, hb, s, cta, p, ej, err };
+        }
+
+        const videoFormats = [
+            makeFmt("1. Acción + Tiempo → Resultado", "Viralidad / Valor", "Fácil", "Mostrar victoria rápida.", "Todos los nichos", "Tráfico frío (ToF), aumentar alcance.", "El cerebro ama los atajos y rechaza la fricción. La promesa de tiempo genera credibilidad.", "Plano frontal dinámico o Faceless mostrando resultado.", "Resultado final o cronómetro.", "Cómo lograr [X] en solo [Y].", "Si tienes X minutos, estás perdiendo dinero si no haces esto.", "1. Hook visual.\n2. Reversión de riesgo.\n3. Paso 1 simple.\n4. Paso 2 secreto.\n5. CTA guardar.", "Guarda esto para hoy.", "Actúa como experto en [NICHO]. Crea guion 'Acción + Tiempo = Resultado' sobre [TEMA]. 3 hooks, 2 pasos accionables, CTA a guardar.", "Cómo estructurar oferta en 20 min usando Notion.", "Prometer tiempos falsos o pasos complejos."),
+            makeFmt("2. Si estás en A o B, así puedes resolver X", "Segmentación", "Fácil", "Identificar a tu avatar.", "Servicios, mentorías.", "Fase de consideración (MoF).", "Efecto Forer. Al sentir que les hablas directamente, bajan sus defensas.", "Cámara en mano, formato selfie íntimo.", "Señalar a cámara o pantalla dividida texto.", "Si estás en [A] o [B]...", "Si tienes este problema, haz esto. Si tienes este otro, haz esto.", "1. Hook segmentando.\n2. Diagnóstico A.\n3. Solución A.\n4. Diagnóstico B.\n5. Solución B.\n6. CTA DM.", "Comenta A o B y te envío la guía.", "Escribe guion 'Si estás en A o B' para mi cliente de [NICHO]. Define 2 niveles de dolor y dale a cada uno un mini plan.", "Si tienes 500 seguidores haz X, si tienes 10k haz Y.", "Situaciones muy genéricas."),
+            makeFmt("3. A + B = C", "Autoridad", "Fácil", "Fórmula memorable.", "Infoproductores, agencias.", "Educar sobre tu método.", "Ecuaciones mentales reducen carga cognitiva y se perciben como verdades absolutas.", "Pizarra o post-its en pared.", "Signo '=' dibujado en grande.", "La fórmula exacta para [X].", "Deja de complicarte. Para lograr X solo suma esto más esto.", "1. Hook rompiendo creencia.\n2. Elemento A.\n3. Elemento B.\n4. Resultado.\n5. CTA autoridad.", "DM 'FÓRMULA' para implementarlo.", "Crea 5 fórmulas A+B=C para mi nicho [NICHO]. Conceptos contrarios que juntos logran [RESULTADO].", "Contenido Valor + DM Setting = Ventas HT.", "Elementos abstractos sin sentido."),
+            makeFmt("4. Hábitos invisibles", "Carrusel / Valor", "Media", "Revelar auto-sabotaje.", "Salud, negocios.", "Nutrir comunidad y generar shares.", "Ataque al punto ciego. Descubrir errores inconscientes genera gratitud y autoridad.", "Carrusel diseño Prime.", "Texto grande, fondo limpio.", "3 Hábitos que matan tu [X].", "N/A", "1. Portada.\n2. Contexto.\n3. Hábito 1 + Psicología.\n4. Hábito 2 + Error.\n5. Hábito 3 + Solución.\n6. CTA.", "Guarda para no autosabotearte.", "Escribe Carrusel de 6 slides sobre 'Hábitos invisibles que frenan [RESULTADO]'. Sé profundo, nada cliché.", "Hábitos que matan tu conversión (tardar 2h en responder).", "Hábitos cliché como 'no tomar agua'."),
+            makeFmt("5. Pregunta en pizarra", "Didáctico", "Fácil", "Enseñar técnica.", "Consultores, educadores.", "Demostrar nivel técnico.", "Formato profesor activa sesgo de autoridad.", "Cámara estática, dibujando en Ipad/Libreta.", "Subrayar palabra clave.", "Clase rápida: Cómo estructurar [X].", "Acércate, te explico cómo funciona esto en 1 min.", "1. Hook a pizarra.\n2. Diagrama simple.\n3. Obstáculo.\n4. Clave.\n5. CTA.", "Comenta CLASE para video largo.", "Idea visual para dibujar un diagrama sobre [TEMA] y guion narrativo para explicarlo en 1 minuto.", "Dibujando embudo de lanzamiento 10k.", "Letra ilegible o diagrama confuso."),
+            makeFmt("6. Bad vs Good vs Excellent", "Viralidad / Autoridad", "Media", "Mostrar niveles de ejecución.", "Ecommerce, marca personal.", "Elevar el estándar y justificar tu precio.", "Anclaje. Defines lo malo para que lo excelente (tú) brille.", "Transiciones rápidas de ropa o planos.", "Texto cambiando: ❌ Malo, ⚠️ Normal, 👑 Prime.", "Niveles de [Acción].", "Así se ve mal hecho. Así promedio. Así nivel Prime.", "1. Hook 3 niveles.\n2. Malo (Dolor).\n3. Normal (Aburrido).\n4. Excelente (Tu método).\n5. CTA venta.", "Link en bio si quieres nivel Excelente.", "Guion 'Malo vs Bueno vs Excelente' demostrando cómo la mayoría hace [ACCIÓN] mal, promedio, y cómo es mi estándar Premium.", "Vender rogando vs PDF vs Cualificación DM.", "Hacer el nivel promedio inalcanzable."),
+            makeFmt("7. Reacción + análisis", "Tendencia", "Media", "Usar contenido ajeno para educar.", "Marketing, psicología.", "Subirte a trends manteniendo estatus.", "Apalancamiento de atención (dopamina del viral + tu autoridad).", "Green screen o Picture-in-Picture.", "Tu rostro de desaprobación sobre video viral.", "Analizando la estrategia de [X].", "Pausa. Necesito explicarte por qué esto es un error.", "1. Hook video viral.\n2. Tu interrupción.\n3. Desglose punto 1.\n4. Lección.\n5. CTA.", "Sígueme para aprender a analizar.", "Guion para reaccionar a un video viral de error común en mi industria. Hook, 3 puntos de intervención, CTA.", "Reaccionando a skincare de famosa marcando errores.", "Criticar sin aportar valor (hater)."),
+            makeFmt("8. Me van a regañar por enseñarte esto", "Exclusividad", "Fácil", "Sensación de secreto revelado.", "Infoproductos.", "Dar mucho valor táctico.", "Curiosidad por lo prohibido y reciprocidad por dar algo 'caro' gratis.", "Mirando a los lados, voz baja.", "Tapar micrófono o acercarse mucho.", "El secreto de la industria [X].", "Mis colegas me van a odiar por revelar esto gratis.", "1. Hook de secreto.\n2. Revelación táctica.\n3. Paso a paso.\n4. El resultado.\n5. CTA.", "Guarda antes de que lo borre.", "Guion estilo 'Secreto de la industria' revelando una táctica de alto valor sobre [TEMA] que otros cobran.", "El prompt exacto que usamos en la agencia.", "Revelar algo obvio o básico."),
+            makeFmt("9. Sin inversión vs Con inversión", "Comparativa", "Media", "Dos caminos al mismo fin.", "Ecommerce, fitness.", "Eliminar excusas económicas.", "Validación. Muestra que entiendes ambas realidades y no discriminas.", "Pantalla dividida.", "Mostrar objeto barato vs caro.", "Cómo lograr [X] con $0 o con $1000.", "No tienes dinero? Haz esto. Tienes presupuesto? Haz esto.", "1. Hook de contraste.\n2. Ruta sin inversión (tiempo).\n3. Ruta con inversión (velocidad).\n4. Conclusión.\n5. CTA.", "Cuál ruta eliges? Comenta.", "Guion comparando cómo lograr [RESULTADO] sin presupuesto (hustle) vs con presupuesto (apalancamiento).", "Rutina en casa sin equipo vs Gym premium.", "Hacer que la opción barata parezca inútil."),
+            makeFmt("10. Excusa vs Realidad", "Carrusel", "Fácil", "Romper objeciones limitantes.", "Coaches, mindset.", "Fase de conciencia de problema.", "Disonancia cognitiva suave. Confrontas con empatía.", "Carrusel texto grande.", "Tachar texto de excusa.", "Lo que te dices vs Lo que pasa.", "N/A", "1. Portada excusa.\n2. El mito.\n3. La verdad incómoda.\n4. El coste de la excusa.\n5. Nuevo paradigma.\n6. CTA.", "Comparte si dolió un poco.", "Carrusel 6 slides rompiendo la excusa más común de mi cliente ideal sobre [TEMA]. Tono confrontativo elegante.", "Excusa: 'No tengo tiempo para redes'. Realidad: 'No tienes sistema'.", "Sonar como un regaño agresivo."),
+            makeFmt("11. Rutinas opuestas", "Valor", "Media", "Demostrar que todo depende del contexto.", "Fitness, negocios.", "Destruir métodos 'talla única'.", "Relevancia. Subcomunica que tienes criterio experto y analizas variables.", "Transiciones dinámicas.", "Dos escenarios visuales distintos.", "Si quieres [A] haz esto, si quieres [B] esto.", "La peor mentira es que todos deben hacer lo mismo.", "1. Hook contextual.\n2. Escenario 1 y su rutina.\n3. Escenario 2 y su rutina.\n4. Por qué mezclar es malo.\n5. CTA.", "Agenda auditoría para ver tu caso.", "Guion contrastando dos rutinas/estrategias opuestas para dos objetivos diferentes dentro de mi nicho.", "Rutina volumen vs Definición extrema.", "Explicaciones demasiado técnicas."),
+            makeFmt("12. Lo que se ve vs para qué sirve", "Revelación", "Fácil", "Explicar utilidad real de cosas raras.", "Terapeutas, ecommerce.", "Educar sobre herramientas propias.", "Curiosidad pura. Resolvemos el enigma visual.", "Sostener objeto extraño.", "Acercamiento al objeto.", "Para qué sirve realmente esto.", "Seguro piensas que esto es para [X], pero mira.", "1. Hook visual del objeto.\n2. Creencia común.\n3. Revelar uso real.\n4. Demostración.\n5. CTA.", "Consíguelo en el link.", "Guion explicando una herramienta/método de mi nicho que parece raro pero es altamente efectivo.", "Herramienta de masaje facial Gua Sha.", "No demostrar visualmente el uso."),
+            makeFmt("13. Cómo hacer X en Y tiempo", "Tutorial", "Fácil", "Paso a paso rápido.", "Servicios, productividad.", "ToF puro. Aumentar alcance.", "Alta utilidad percibida. Se guarda para aplicar después.", "Pantalla compartida o acción rápida.", "Acción a alta velocidad.", "Tutorial: [X] en 1 min.", "Te enseño a hacer [X] antes de que acabe este video.", "1. Promesa temporal.\n2. Herramientas necesarias.\n3. Pasos 1,2,3.\n4. Resultado final.\n5. CTA guardar.", "Guarda para replicarlo.", "Tutorial de 60s explicando cómo hacer [ACCIÓN] paso a paso usando neuroventas.", "Cómo configurar automatización de Manychat en 1 min.", "Saltarse pasos clave."),
+            makeFmt("14. Personaje animado de tu rubro", "Entretenimiento", "Avanzada", "Crear familiaridad con humor.", "Marca personal.", "Crear cultura y comunidad.", "El humor baja defensas. Crear un arquetipo (el cliente terco, el jefe malo) genera identificación masiva.", "Disfraz ligero o filtro.", "Expresión exagerada del personaje.", "El cliente que pide rebaja be like...", "Voz alterada actuando la objeción.", "1. Hook del personaje actuando.\n2. Tu respuesta calmada/experta.\n3. Resolución humorística.\n4. Moraleja.\n5. CTA.", "Etiqueta a quien le pase.", "Guion de sketch humorístico donde un 'cliente difícil' interactúa conmigo sobre [TEMA].", "Actuando como el cliente que quiere resultados en 1 día.", "No dejar claro el mensaje de valor."),
+            makeFmt("15. 3 formas de lograr X", "Decisión", "Media", "Dar opciones viables.", "Negocios, educación.", "Posicionarte como guía estratégico.", "Ilusión de control. Das opciones pero tú eres el dueño del marco de referencia.", "Listado visual con dedos.", "Contar con los dedos.", "3 Caminos para [X].", "Hay 3 formas de lograr X, la número 2 es mi favorita.", "1. Hook.\n2. Forma 1 (Común).\n3. Forma 2 (Difícil).\n4. Forma 3 (Tu método/secreto).\n5. CTA.", "Comenta cuál prefieres.", "Guion de 3 formas de lograr [OBJETIVO]. La tercera debe ser mi método propietario.", "3 formas de escalar: orgánico, ads, afiliados.", "Hacer las tres opciones aburridas."),
+            makeFmt("16. Antes vs Ahora temporal", "Análisis", "Fácil", "Mostrar evolución de mercado.", "Marketing, tecnología.", "Demostrar que estás actualizado.", "Prueba de relevancia. Si conoces el pasado y dominas el presente, confían en tu visión del futuro.", "Dividir pantalla o fotos antiguas.", "Foto año 2020 vs 2024.", "Cómo cambió [X] en 4 años.", "Si sigues haciendo [X] como en 2020, vas a perder.", "1. Contexto antiguo.\n2. Lo que funcionaba antes.\n3. El cambio de paradigma.\n4. Lo que funciona HOY.\n5. CTA.", "DM ACTUALIZAR para el método nuevo.", "Guion comparando cómo se hacía [ACCIÓN] antes vs cómo debe hacerse HOY en mi industria.", "Embudo de webinars 2020 vs VSL 2024.", "Sonar nostálgico en vez de estratégico."),
+            makeFmt("17. Esto haría si ayudara a X", "Carrusel / Autoridad", "Media", "Playbook experto.", "Consultores, agencias.", "Demostrar maestría táctica pura.", "Transferencia de autoridad. Analizar a un grande te pone mentalmente a su nivel.", "Gráficos de auditoría.", "Foto de marca conocida.", "Mi plan de 90 días para [Marca].", "N/A", "1. Portada del caso hipotético.\n2. Diagnóstico actual.\n3. Fuga detectada.\n4. Plan de acción 1,2,3.\n5. Resultados proyectados.\n6. CTA.", "Agenda auditoría para tu marca.", "Carrusel detallando el plan estratégico exacto que implementaría si [MARCA FAMOSA] fuera mi cliente.", "El playbook que le aplicaría a Gymshark hoy.", "Análisis muy superficial o fanboy."),
+            makeFmt("18. Señales de un problema", "Diagnóstico", "Fácil", "Autodiagnóstico del lead.", "Psicología, negocios.", "Fase inicial de embudo. Generar consciencia.", "Efecto Barnum. La gente asiente internamente al escuchar síntomas que reconocen en sí mismos.", "Contando con dedos.", "Mirada seria y analítica.", "3 Señales de que tienes [Problema].", "Si te pasa la número 2, tienes una fuga grave.", "1. Hook de alerta.\n2. Señal 1 (leve).\n3. Señal 2 (común).\n4. Señal 3 (grave/dolor).\n5. CTA a solución.", "Identificaste alguna? Comenta.", "Guion enumerando 3 síntomas invisibles de [PROBLEMA] que sufre mi cliente ideal. Tono empático pero firme.", "Señales de burnout emprendedor.", "Síntomas muy obvios (ej. 'si no tienes plata eres pobre')."),
+            makeFmt("19. Respuesta a pregunta común", "Claridad", "Fácil", "Resolver dudas frecuentes.", "Expertos, ecommerce.", "Nutrición y manejo de objeciones.", "Transparencia radical. Responder sin rodeos construye confianza instantánea.", "Caja de preguntas de IG flotando.", "Señalar la pregunta en pantalla.", "Me preguntan mucho esto...", "Vamos a responder la duda más grande sobre [X].", "1. Leer pregunta.\n2. Respuesta corta (Sí/No).\n3. Matiz o explicación profunda.\n4. Recomendación final.\n5. CTA.", "Déjame tu duda en comentarios.", "Guion respondiendo la objeción más dura de mi nicho sobre [TEMA] usando transparencia radical.", "Es necesario invertir en Ads para empezar? No, pero...", "Responder con 'depende' y no aclarar."),
+            makeFmt("20. Categoría A vs B", "Educación", "Media", "Clasificar conceptos confusos.", "Inversiones, marketing.", "Educar al mercado sobre tus términos.", "Organización mental. Al darles cajas (A y B) para guardar conceptos, te ven como mentor.", "Pizarra o pantalla dividida.", "Texto A (izq) vs B (der).", "La diferencia real entre [A] y [B].", "Mucha gente confunde [A] con [B]. Aquí la verdad.", "1. Hook diferenciador.\n2. Definir A (Lo común).\n3. Definir B (Lo complejo).\n4. Cuándo usar cuál.\n5. CTA.", "Cuál eres tú? Comenta.", "Guion contrastando dos conceptos que mi mercado siempre confunde en [NICHO].", "Diferencia entre Audiencia y Comunidad.", "Hacer ambas categorías iguales."),
+            makeFmt("21. Ranking 1 al 10", "Entretenimiento", "Media", "Evaluar con criterio experto.", "Ecommerce, nutrición.", "Posicionarte como curador/juez.", "El cerebro ama las listas y clasificaciones. Genera debates en comentarios.", "Fotos flotantes de los ítems.", "Poner calificación gigante.", "Calificando [X] del 1 al 10.", "Evaluando herramientas de [Nicho] como experto.", "1. Hook del ranking.\n2. Ítem 1 + Calificación y por qué.\n3. Ítem 2 + Calificación dura.\n4. Ítem 3 (El 10/10).\n5. CTA.", "Cuál me faltó? Comenta.", "Guion calificando 3 opciones populares de mi nicho del 1 al 10 con argumentos técnicos y sarcasmo suave.", "Calificando plataformas de cursos (Kajabi, Hotmart, etc).", "Darle 10 a todo. Debe haber contraste."),
+            makeFmt("22. Qué pasaría si X", "Hipotético", "Fácil", "Abrir escenario mental.", "Educación, negocios.", "Generar retención por curiosidad.", "Ruptura de patrón lógico. Imaginar un escenario irreal obliga al cerebro a quedarse para ver el desenlace.", "Fondo verde con imagen rara.", "Mirada pensativa mirando arriba.", "¿Qué pasaría si hoy desaparece [X]?", "Imagínate que mañana prohíben [X]. ¿Qué harías?", "1. Planteamiento hipotético.\n2. Consecuencia 1.\n3. Consecuencia 2.\n4. Lección aplicable hoy.\n5. CTA.", "DM para blindar tu negocio.", "Guion hipotético sobre qué pasaría si [HERRAMIENTA/MÉTODO] dejara de existir y cómo sobrevivir.", "¿Qué pasaría si Instagram cierra mañana?", "Hacer la hipótesis muy aburrida."),
+            makeFmt("23. Mal hecho vs Bien hecho", "Demostración", "Fácil", "Diferencia visual clara.", "Servicios, fitness.", "Educar visualmente sin rodeos.", "Aprendizaje por contraste visual directo. Reduce la curva de aprendizaje a segundos.", "Pantalla dividida (❌ y ✅).", "Ejecutar la acción mal de forma obvia.", "Cómo no hacer [X].", "Si estás haciendo esto, detente. Así se hace.", "1. Mostrar error con X roja.\n2. Mostrar técnica correcta con ✅.\n3. Explicar el micro-ajuste clave.\n4. Resultado del ajuste.\n5. CTA.", "Guarda la técnica correcta.", "Guion visual de Mal hecho vs Bien hecho para mi nicho. Indica exactamente la acción física.", "Hacer sentadilla mal vs bien.", "Explicar con palabras en vez de demostrar."),
+            makeFmt("24. Analicé X y encontré esto", "Investigación", "Media", "Filtro experto.", "Marketing, agencias.", "Demostrar trabajo duro y analítica.", "El espectador valora el tiempo que le ahorras. Te ven como un investigador confiable.", "Hojas impresas o Excel de fondo.", "Sostener un reporte o mirar gráficos.", "Analicé 100 [X] y vi un patrón.", "Me tomé el tiempo de revisar [X] para que tú no lo hagas.", "1. Hook del esfuerzo (Analicé X).\n2. El mito desmentido.\n3. El patrón ganador revelado.\n4. Cómo aplicarlo.\n5. CTA.", "Comenta REPORTE y te paso el PDF.", "Guion donde revelo un patrón oculto tras analizar muchos casos de [TEMA] en mi nicho.", "Analicé 50 funnels de coaches y vi este error.", "Mentir sobre los datos."),
+            makeFmt("25. 10 ideas que funcionan", "Guardable", "Fácil", "Lista de alto valor.", "Cualquier nicho.", "Generar guardados masivos (algoritmo).", "Densidad de valor. Las listas largas prometen mucha recompensa cognitiva, obligando a guardar para leer después.", "Carrusel o video rápido con lista en pantalla.", "Lista haciendo scroll rápido.", "10 Formas de [X] (Guarda esto).", "Te daré 10 ideas precisas para [X].", "1. Hook directo.\n2. Disparar ideas 1 a 5 rápido.\n3. Pico de interés ('La 7 es mi favorita').\n4. Ideas 6 a 10.\n5. CTA agresivo a guardar.", "No te vas a acordar, guárdalo.", "Lista de 10 ideas/tips ultra específicos y tácticos sobre [TEMA] disparados rápidamente.", "10 ganchos visuales para ecommerce.", "Dar ideas de relleno o muy largas."),
+            
+            // Due to constraints, rendering the remaining 25 Video formats with high-density precision
+            makeFmt("26. X + Y + Z = Ganador", "Fórmula", "Fácil", "Trío memorable.", "Negocios, contenido.", "Explicar tu framework.", "El poder del 3. El cerebro retiene tríadas perfectamente (Principio de la navaja de Occam).", "Pizarra o texto grande.", "3 iconos grandes en pantalla.", "El combo definitivo para [X].", "Si juntas esto, esto y esto, te vuelves imparable.", "1. Hook del combo.\n2. Elemento 1 (Base).\n3. Elemento 2 (Acelerador).\n4. Elemento 3 (Multiplicador).\n5. CTA.", "Comenta COMBO para el taller.", "Fórmula de 3 elementos inusuales que garantizan el éxito en [OBJETIVO].", "Oferta + Tráfico + Setting = Scale.", "Elementos sin relación lógica."),
+            makeFmt("27. Miedos graciosos + Profundo", "Meme / Conexión", "Media", "Humor a verdad incómoda.", "Marca personal.", "Humanizar y tocar un dolor real.", "Transición emocional. El humor relaja las defensas, haciendo que el golpe de la verdad duela más y genere empatía.", "Mirada asustada a cosas tontas.", "Texto flotante con miedos.", "Cosas que me dan miedo: 1. Arañas, 2...", "Me da terror [Cosa tonta], pero lo que de verdad me aterra es...", "1. Miedo tonto 1.\n2. Miedo tonto 2.\n3. Transición musical.\n4. Miedo profundo del nicho.\n5. Resolución / Empatía.", "Si te pasa, estamos juntos.", "Guion empezando con humor y terminando revelando el miedo más profundo de mi cliente ideal.", "Miedo a los payasos vs Miedo a volver a trabajar en cubículo.", "Que el miedo profundo sea falso."),
+            makeFmt("28. 1 Objetivo, 3 Estrategias", "Clones", "Media", "Niveles estratégicos.", "Servicios, marketing.", "Posicionarte para distintos avatares.", "Escalabilidad percibida. Demuestra que puedes ayudar desde el novato hasta el avanzado.", "Cambiarse de polo/gafas.", "Pantalla dividida en 3 tú.", "Cómo lograr [X] según tu nivel.", "Si tienes $0 haz esto, con $1k esto, con $10k esto.", "1. Hook del objetivo general.\n2. Estrategia Principiante.\n3. Estrategia Intermedia.\n4. Estrategia Avanzada (Tu servicio).\n5. CTA.", "DM 'AVANZADO' para mentorearte.", "Guion para lograr [RESULTADO] con estrategia novata, media y Prime (experta).", "1 objetivo: leads. Novato: Reels. Medio: Ads. Prime: Sistema referidos.", "Hacer la estrategia básica inútil."),
+            makeFmt("29. Nunca le enseñes esto a X", "Psicología inversa", "Fácil", "Curiosidad extrema.", "Infoproductos.", "Viralidad pura.", "Reactancia psicológica. Prohibir algo hace que la gente lo desee obsesivamente.", "Susurrando, cerca a cámara.", "Tapar la cámara un segundo.", "No le mandes esto a tu competencia.", "Si tu competencia ve esto, estás perdido.", "1. Hook de prohibición.\n2. El 'por qué' es peligroso.\n3. Revelación del truco/recurso.\n4. Resultado masivo.\n5. CTA.", "Úsalo bajo tu propio riesgo.", "Guion usando reactancia psicológica ('No veas esto') para revelar una táctica avanzada de [TEMA].", "Nunca le enseñes este prompt a un copywriter.", "Que el truco no sea realmente bueno."),
+            makeFmt("30. Lecciones de figura pública", "Transferencia", "Media", "Apalancar autoridad ajena.", "Negocios, educación.", "Crear contenido profundo aprovechando tendencias.", "Efecto Halo. Asocias tu inteligencia al éxito de la figura analizada.", "B-roll de la figura pública.", "Foto de Elon, Jobs, etc.", "Lo que nadie entendió de [Figura].", "Todos admiran a [Figura], pero ignoran su mayor secreto.", "1. Hook con nombre famoso.\n2. El éxito evidente.\n3. La lección oculta (tu análisis).\n4. Cómo aplicarlo hoy.\n5. CTA.", "Sígueme para análisis de élite.", "Analiza la estrategia de una figura polémica/exitosa de mi nicho y extrae 1 lección maestra.", "Por qué MrBeast sería el mejor marketer B2B.", "Solo contar su biografía en Wikipedia."),
+            makeFmt("31. Método antiguo (Viejito)", "Sketch", "Avanzada", "Criticar obsoleto sin sermonear.", "Tecnología, negocios.", "Vender la nueva forma (tu producto).", "Ridiculización suave. Atacar un método anticuado mediante un personaje evita ofender directamente al usuario.", "Filtro de viejo o gafas/sombrero.", "Tos falsa o ajustarse gafas.", "Cuando usas [Método viejo] en 2024.", "En mis tiempos vendíamos puerta a puerta (Voz de viejo).", "1. Hook del personaje viejo sufriendo.\n2. Diálogo defendiendo lo obsoleto.\n3. Tú moderno resolviéndolo en 1 click.\n4. Contraste de resultados.\n5. CTA.", "Actualízate con el link de bio.", "Sketch humorístico: Personaje usando método antiguo para [ACCIÓN] vs Yo usando mi método moderno.", "Hacer base de datos en Excel vs Automatización CRM.", "Hacer el sketch demasiado largo."),
+            makeFmt("32. Acción física + Analogía", "Metáfora", "Media", "Explicar conceptos abstractos.", "Psicología, ventas.", "Hacer memorable tu mensaje.", "Anclaje visual. El cerebro recuerda mejor un concepto si se asocia a un objeto físico y movimiento.", "Usar vasos de agua, ligas, etc.", "Estirar una liga hasta casi romperla.", "Esto le pasa a tu negocio cuando...", "Mira esta liga. Así está tu equipo de ventas ahora mismo.", "1. Acción física impactante.\n2. Presentar la analogía.\n3. Explicar la conexión con el dolor.\n4. Dar la solución estratégica.\n5. CTA.", "Comparte si entendiste la metáfora.", "Crea una metáfora visual usando objetos cotidianos para explicar [CONCEPTO COMPLEJO].", "Verter agua en un colador = Tráfico sin embudo.", "Metáfora sin conexión lógica clara."),
+            makeFmt("33. Infografía animada", "Visual Premium", "Avanzada", "Proceso visual memorable.", "Tecnología, servicios.", "Educar con nivel altísimo.", "Retención estética. Animaciones fluidas hipnotizan y elevan el valor percibido del contenido.", "Cero cámara, solo animación gráfica.", "Gráficos moviéndose fluido.", "Cómo funciona [Sistema].", "(Voz en off profunda y clara).", "1. Problema general visualizado.\n2. Zoom al cuello de botella.\n3. Presentación de tu sistema.\n4. Flujo de solución paso a paso.\n5. CTA en pantalla.", "Guarda el mapa estratégico.", "Guion para voz en off describiendo un proceso visual paso a paso sobre [TEMA] para un animador.", "Infografía del viaje del cliente High Ticket.", "Animación lenta o texto pequeño."),
+            makeFmt("34. Productos peleando", "Sketch Comparativa", "Avanzada", "Comparar entreteniendo.", "Ecommerce, IA.", "Demostrar superioridad de producto.", "Dinamismo. Rompe el formato aburrido de 'pros y contras'.", "Dos productos con voces/caras o tú en 2 roles.", "Miradas desafiantes (pantalla dividida).", "[A] vs [B]: La batalla final.", "Producto A: 'Soy más barato'. Producto B: 'Y yo duro 5 años'.", "1. Hook enfrentamiento.\n2. Ataque del rival débil (precio).\n3. Contraataque del tuyo (valor).\n4. Knockout (beneficio único).\n5. CTA.", "Team A o Team B? Comenta.", "Sketch donde mi producto y la competencia debaten. Mi producto debe ganar por valor, no precio.", "Notion vs Excel peleando por organizar la vida.", "Sonar arrogante o insultar a la marca rival."),
+            makeFmt("35. Respuesta a mensaje polémico", "Objeciones", "Fácil", "Responder objeción real.", "Servicios, comunidad.", "Manejar objeciones públicamente.", "Prueba social inversa. Al no tener miedo de exponer a los haters/dudas, demuestras máxima confianza en tu oferta.", "Caminando, luz natural.", "Sticker de pregunta/hate gigante.", "Me dijeron que mi servicio es caro.", "Alguien me escribió esto y necesito responderlo públicamente.", "1. Mostrar mensaje real (dolor/objeción).\n2. Validar o destruir la premisa con calma.\n3. Reencuadre de valor.\n4. Conclusión filosófica de marca.\n5. CTA autoridad.", "Si piensas como yo, agenda llamada.", "Guion respondiendo un comentario de 'hate' o duda frecuente sobre [TEMA] con total elegancia y altura.", "Respondiendo a: 'Con IA ya no se necesitan copywriters'.", "Perder la calma o atacar a la persona."),
+            makeFmt("36. Nuevo vs Veterano", "Mentalidad", "Media", "Contraste de madurez.", "Trading, negocios.", "Posicionarte como mentor sabio.", "Identificación aspiracional. El novato ve sus errores y quiere la paz mental del veterano.", "Ropa distinta, actitud ansiosa vs relajada.", "Ansioso mirando pantalla vs Tomando café.", "Día 1 vs Año 5 en [Nicho].", "Novato: 'Necesito otra táctica!'. Veterano: 'Foco en los básicos'.", "1. Hook del contraste.\n2. Situación de estrés.\n3. Reacción del novato (pánico).\n4. Reacción del veterano (sistema).\n5. CTA.", "Sígueme para pensar como veterano.", "Sketch: Cómo reacciona un novato vs un experto ante [PROBLEMA TÍPICO] en mi industria.", "Novato cuando un Reel fracasa vs Veterano iterando.", "Hacer al veterano parecer un robot sin emociones."),
+            makeFmt("37. Tipos de personalidad", "Identificación", "Media", "Que la audiencia se etiquete.", "Comunidad, coaching.", "Generar shares en stories.", "Pertenencia tribal. A la gente le encanta categorizarse y etiquetar a sus amigos.", "Carrusel diseño limpio.", "Iconos representativos por tipo.", "Qué tipo de [Avatar] eres.", "N/A", "1. Portada intrigante.\n2. Tipo 1 (El ansioso).\n3. Tipo 2 (El perfeccionista).\n4. Tipo 3 (El ejecutor).\n5. Cuál eres tú.\n6. CTA shares.", "Etiqueta a tu amigo Tipo 2.", "Carrusel definiendo 4 tipos de personalidades/arquetipos de clientes en el mundo de [NICHO].", "Tipos de emprendedores en lanzamientos.", "Descripciones genéricas tipo horóscopo."),
+            makeFmt("38. Soluciones con Post-its", "Faceless", "Fácil", "Soluciones rápidas y estéticas.", "Todos los nichos.", "Contenido de valor sin producción.", "Lo analógico destaca en un feed digital. El sonido de pegar el papel retiene la atención.", "Solo se ven las manos y la pared/laptop.", "Mano pegando el primer post-it (ASMR).", "El plan de 3 pasos para [X].", "(Audio ASMR de papel y escritura o trend musical).", "1. Pegar Post-it central (Problema).\n2. Pegar Paso 1.\n3. Pegar Paso 2.\n4. Pegar Paso 3.\n5. Texto flotante con CTA.", "Lee el caption para el detalle.", "Ideas de 3 pasos clave para resolver [DOLOR] escritos en post-its, formato Faceless ASMR.", "3 post-its para organizar el domingo.", "Letra fea o mala iluminación."),
+            makeFmt("39. Explicación para 5 años", "Claridad", "Fácil", "Simplificar lo complejo.", "Tecnología, salud, finanzas.", "Hacer accesible tu producto técnico.", "Eliminación de la maldición del conocimiento. Si lo entiende un niño, todos lo guardan.", "Plano cercano, tono cálido y pausado.", "Mostrar un juguete o manzana para ejemplo.", "Explicando [X] para niños de 5 años.", "Si no entiendes [X], te lo explico con manzanas.", "1. Hook reduccionista.\n2. Establecer la analogía simple.\n3. Explicar la mecánica base.\n4. El resultado evidente.\n5. CTA.", "Si lo entendiste, comparte.", "Guion explicando [CONCEPTO TÉCNICO] usando la analogía de un puesto de limonada o similar.", "Explicando Blockchain con piezas de Lego.", "Usar jerga técnica en la explicación simple."),
+            makeFmt("40. Preguntas incómodas", "Interacción", "Fácil", "Generar debate.", "Comunidad, marca personal.", "Aumentar comentarios masivamente.", "Polarización táctica. Tocar un nervio sutil obliga a la gente a dar su opinión para validar su visión del mundo.", "Mirada fija y desafiante a cámara.", "Pausa incómoda inicial de 1s.", "Hablemos de una verdad incómoda en [Nicho].", "Tengo una pregunta que nadie quiere responder: [Pregunta].", "1. Hook polémico.\n2. Contexto de por qué nadie lo habla.\n3. Tu postura (fuerte).\n4. Devolver la pregunta al público.\n5. CTA comentarios.", "Te leo en los comentarios.", "Formula una pregunta filosófica e incómoda sobre [TEMA] para polarizar opiniones en mi audiencia.", "¿Es ético cobrar 10k si no garantizas ROI?", "Hacer una pregunta ofensiva en lugar de estratégica."),
+            makeFmt("41. Creencia errónea + Acciones graciosas", "Humor / Diagnóstico", "Media", "Ironía suave.", "Coaching, contenido.", "Confrontar sin que duela.", "El humor expone la hipocresía de nuestras propias acciones, generando auto-reconocimiento (likes).", "Tú haciendo acciones exageradas.", "Texto estático mientras tú te mueves rápido.", "POV: Crees que [Mito], pero haces [Error].", "(Música de circo o trend de ironía).", "1. Texto de la creencia (Ej. 'Quiero clientes premium').\n2. Acción 1 (Perfil descuidado).\n3. Acción 2 (Cobrando barato).\n4. Mirada irónica a cámara.\n5. CTA.", "DM ESTRATEGIA para arreglarlo.", "Idea visual: Texto de una expectativa falsa de mi cliente vs 3 acciones contradictorias que hacen en la vida real.", "POV: Quieres viralizar pero subes 1 video al mes.", "Burlarte cruelmente del cliente."),
+            makeFmt("42. Multi ángulos", "Retención", "Media", "Mantener atención visual extrema.", "Ventas, motivación.", "Cuando el guion es muy hablado/teórico.", "Disrupción de patrón visual constante resetea la atención del cerebro cada 2 segundos.", "Grabar el mismo audio desde 3 ángulos.", "Corte brusco cada vez que dices una coma.", "La cruda realidad sobre [X].", "Escúchame bien. [Corte]. Si sigues haciendo [X]... [Corte] vas a quebrar.", "1. Hook ángulo 1.\n2. Premisa ángulo 2.\n3. Desarrollo saltando ángulos.\n4. Cierre en plano cerrado.\n5. CTA.", "Guarda esto antes de que te pase.", "Guion de 40s sobre [TEMA]. Indica exactamente en qué palabras debo hacer un corte de cámara (cambio de ángulo) para resetear atención.", "Reflexión dura sobre mentalidad de pobreza.", "Mover la cámara marea; deben ser ángulos fijos distintos."),
+            makeFmt("43. Metáfora visual con objetos", "Faceless / Educación", "Media", "Conceptos abstractos a físicos.", "Negocios, ventas.", "Educar visualmente sin rostro.", "Tangibilidad. Lo físico se procesa más rápido que el texto.", "Manos manipulando objetos (vasos, monedas).", "Dejar caer una moneda en agua.", "Por qué tu energía se esfuma.", "(Solo ASMR y música, sin voz).", "1. Mostrar objeto A (Tu recurso).\n2. Mostrar objeto B (El problema).\n3. Interacción visual (Destrucción o solución).\n4. Texto moraleja.\n5. CTA.", "Lee el caption completo.", "Concepto visual Faceless usando 2 objetos cotidianos para explicar el problema de [DOLOR].", "Vaso con agujeros (Negocio sin retención) y agua (Tráfico).", "Usar objetos confusos."),
+            makeFmt("44. Carrusel App x App", "Herramientas", "Media", "Enseñar stack tecnológico.", "Productividad, negocios.", "Autoridad técnica y guardados masivos.", "Alto valor utilitario. Das el 'cómo' exacto, lo que genera reciprocidad gigantesca.", "Capturas de pantalla limpias con flechas.", "Mockups de celulares con las apps.", "El sistema exacto de 3 apps para [X].", "N/A", "1. Portada del Sistema.\n2. App 1 (Captación) + Cómo usarla.\n3. App 2 (Gestión) + Integración.\n4. App 3 (Cierre).\n5. Diagrama de flujo.\n6. CTA.", "Comenta APPS y te envío los links.", "Carrusel estructurando el 'Tech Stack' (3 herramientas combinadas) para automatizar o resolver [PROBLEMA].", "Notion + Make + Manychat para leads.", "Solo listar las apps sin enseñar cómo se conectan."),
+            makeFmt("45. B-roll Storytelling", "Emocional", "Fácil", "Contar historia con clips cotidianos.", "Lifestyle estratégico.", "Conectar un domingo/fin de semana.", "El B-roll relaja. El texto largo obliga a leer y reinicia el bucle de video, aumentando el Watch Time radicalmente.", "Clips estéticos de 2s.", "Video sirviendo café, texto semitransparente.", "El día que casi cierro mi negocio.", "(Audio ambiente o canción nostálgica).", "1. Clip 1 + Hook texto.\n2. Clip 2 + Párrafo dolor.\n3. Clip 3 + Realización.\n4. Clip 4 + Situación actual (Éxito).\n5. CTA al caption.", "Historia completa en la descripción.", "Escribe historia personal en 4 párrafos cortos para superponer sobre video de B-roll estético sobre cómo superé [DOLOR].", "Video lluvia + Texto sobre cómo dejé de cobrar por horas.", "Texto ilegible o clips muy movidos."),
+            makeFmt("46. POV Inmersivo", "Identificación", "Fácil", "Poner al usuario en la situación.", "Ecommerce, comunidad.", "Generar deseo o empatía inmediata.", "Empatía cognitiva. Al usar 'POV' (Point of View), el cerebro asume la perspectiva de primera persona.", "Grabar desde la altura de los ojos o pecho.", "Tus manos abriendo un paquete (vista de primera persona).", "POV: Por fin encuentras el [Producto] perfecto.", "(Audio de tendencia o ASMR).", "1. Hook visual POV.\n2. Acción inmersiva de disfrute o alivio.\n3. Mostrar el detalle que todos aman.\n4. Resolución emocional.\n5. CTA.", "Consíguelo en el link.", "Guion POV donde pongo a mi cliente ideal viviendo el momento de máximo placer al usar [OFERTA/PRODUCTO].", "POV: Llegas a casa y te haces tu rutina de skincare premium.", "Grabar desde un ángulo que no parece primera persona."),
+            makeFmt("47. Plot twist (Giro inesperado)", "Storytelling", "Media", "Retención hasta el último segundo.", "Ventas, educación.", "Cuando la retención de tus videos es baja.", "Violación de expectativas. Genera un pico de dopamina al final cuando revelas que la premisa inicial era falsa o distinta.", "Vlog natural, caminando.", "Mirada seria, tono de confesión.", "Por qué dejé de usar [X].", "Tengo que confesar algo. Llevo meses sin usar [X]...", "1. Construir la premisa falsa o misterio.\n2. Desarrollar el 'problema'.\n3. Pico de tensión.\n4. El Plot Twist (La verdad real o solución disruptiva).\n5. CTA.", "Si te sorprendió, sígueme.", "Guion que empiece construyendo una idea común sobre [TEMA] y en el segundo 30 tenga un giro inesperado que cambie todo el contexto.", "Por qué despedí a mi mejor cliente (Porque se volvió mi socio).", "Que el giro sea decepcionante o clickbait barato."),
+            makeFmt("48. Mini documental / Vlog", "Comunidad", "Media", "Documentar proceso real.", "Marca personal, agencias.", "Crear relación a largo plazo (autoridad profunda).", "Transparencia de proceso (Build in public). Ver el trabajo duro justifica los precios premium.", "Vlog en mano, saltos de tiempo (día 1, día 2).", "Montaje rápido de acciones trabajando.", "Detrás de cámaras: Escalando a [Métrica].", "Día 1 construyendo el lanzamiento más grande de mi vida.", "1. Establecer la gran meta (Hook).\n2. Mostrar el obstáculo.\n3. B-roll trabajando duro.\n4. Reflexión a cámara sobre proceso.\n5. Resultado o avance.\n6. CTA.", "Acompáñame en el proceso, sígueme.", "Estructura de Vlog de 1 minuto documentando el 'Detrás de cámaras' de cómo logré [HITO] enfrentando [OBSTÁCULO].", "Día 1 creando un infoproducto de $1000.", "Hacerlo un diario aburrido sin narrativa ni tensión."),
+            makeFmt("49. Faceless clips + texto", "Valor puro", "Fácil", "Educar sin rostro ni esfuerzo extremo.", "Nichos técnicos, timidez.", "Mantener volumen de publicación alto.", "Consumo rápido de información. El cerebro procesa el texto clave sin distracciones visuales.", "Clips de Pexels/Canva estéticos o tu escritorio.", "Clip de lujo/estético en bucle.", "3 Reglas inquebrantables de [Nicho].", "(Audio instrumental premium).", "1. Visual estético en bucle.\n2. Hook en texto grande centrado.\n3. Regla 1 (Aparece y desaparece).\n4. Regla 2.\n5. Regla 3.\n6. CTA.", "Guarda las reglas.", "3 reglas/principios contraintuitivos sobre [TEMA] listos para poner en texto sobre un video estético de fondo.", "3 reglas del dinero que los bancos ocultan.", "Texto muy rápido que no da tiempo a leer."),
+            makeFmt("50. Problema → Solución rápida", "Conversión", "Fácil", "Vender de forma directa.", "Todos los nichos.", "Bottom of Funnel (BoF). Cuando quieres dinero hoy.", "Contraste puro. Toca la herida y presenta la tirita instantáneamente.", "Hablando directo, agresivo pero educado.", "Sosteniendo la solución o pantalla de prueba.", "Cómo dejar de sufrir por [Problema].", "Si estás harto de [Dolor], necesitas esto.", "1. Agitar el problema severamente (5s).\n2. Mostrar la ineficacia de otras soluciones (5s).\n3. Presentar TU solución (10s).\n4. Beneficio principal.\n5. CTA de fricción baja.", "DM 'SOLUCIÓN' y te ayudo.", "Guion de venta agresivo y directo: Agita el [DOLOR], destruye la competencia y presenta mi [OFERTA] como salvación lógica.", "Cansado de prospectar en frío? Instala este embudo Inbound.", "No agitar lo suficiente el problema antes de dar la solución.")
+        ];
+const upgradedVideoFormatPrompts = [
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como estratega de contenido viral. Convierte el tema anterior en un guion usando el formato "Acción + Tiempo → Resultado".
+
+Crea:
+1. Una promesa concreta de tiempo.
+2. Una acción simple que produzca el resultado.
+3. Hook visual con cronómetro, antes/después o acción en progreso.
+4. Hook textual para pantalla.
+5. Hook verbal de apertura.
+6. Guion de 30 a 45 segundos.
+7. Estructura por escenas.
+8. CTA para guardar, comentar o enviar DM.
+
+El resultado debe sentirse específico, creíble y accionable. Evita promesas exageradas.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como estratega de contenido. Convierte el tema anterior en un guion usando el formato "Si estás en A o B, así puedes resolver X".
+
+Crea:
+1. Dos perfiles claros de audiencia: A y B.
+2. El problema común que ambos comparten.
+3. Una solución adaptada para cada perfil.
+4. Hook visual con pantalla dividida o señalización A/B.
+5. Hook textual.
+6. Hook verbal.
+7. Guion de 30 a 45 segundos.
+8. CTA que invite a comentar A o B.
+
+El guion debe hacer que la persona sienta: "me está hablando a mí".`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como experto en comunicación simple. Convierte el tema anterior en un guion usando el formato "A + B = C".
+
+Crea:
+1. Una fórmula memorable de dos elementos.
+2. Qué significa A.
+3. Qué significa B.
+4. Qué resultado produce C.
+5. Hook visual con pizarra, post-its o texto tipo ecuación.
+6. Hook textual.
+7. Hook verbal.
+8. Ejemplo aplicado al nicho.
+9. CTA para guardar o pedir la fórmula completa.
+
+La fórmula debe sonar fácil de recordar y útil para tomar acción.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como estratega de carruseles educativos. Convierte el tema anterior en un carrusel usando el formato "Hábitos invisibles".
+
+Crea:
+1. Título de portada.
+2. 5 hábitos invisibles que frenan el resultado.
+3. Explicación breve de por qué cada hábito sabotea.
+4. Reencuadre práctico para corregir cada hábito.
+5. Texto para 7 slides.
+6. CTA final para guardar o compartir.
+7. Caption breve.
+
+Evita hábitos obvios. Busca puntos ciegos reales de la audiencia.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como educador experto. Convierte el tema anterior en un guion usando el formato "Pregunta en pizarra o libreta".
+
+Crea:
+1. Una pregunta potente para escribir en la pizarra.
+2. Respuesta en 3 puntos.
+3. Qué dibujar o escribir visualmente.
+4. Hook visual con mano escribiendo.
+5. Hook textual.
+6. Hook verbal.
+7. Guion de 45 segundos.
+8. CTA para comentar una pregunta o pedir una clase.
+
+Debe sentirse como una mini clase clara, útil y premium.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como estratega de autoridad. Convierte el tema anterior en un guion usando el formato "Bad vs Good vs Excellent".
+
+Crea:
+1. Versión BAD de la acción.
+2. Versión GOOD.
+3. Versión EXCELLENT alineada con un estándar premium.
+4. Por qué cada nivel produce resultados distintos.
+5. Hook visual con tres columnas o cambios de escena.
+6. Hook textual.
+7. Hook verbal.
+8. CTA para querer el método excelente.
+
+No ridiculices al principiante; muestra evolución y criterio experto.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como analista experto. Convierte el tema anterior en un guion usando el formato "Reacción a contenido viral + análisis profesional".
+
+Crea:
+1. Tipo de contenido viral que se va a reaccionar.
+2. Qué parte pausarías.
+3. Qué está bien.
+4. Qué está incompleto o mal interpretado.
+5. Tu análisis profesional.
+6. Hook visual con pantalla dividida o green screen.
+7. Hook textual.
+8. Hook verbal.
+9. CTA para seguir viendo análisis.
+
+Debe aportar criterio, no solo opinión.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como creador de contenido de alto valor. Convierte el tema anterior en un guion usando el formato "Me van a regañar por enseñarte esto gratis".
+
+Crea:
+1. Una revelación que normalmente sería de pago.
+2. Por qué esa información es valiosa.
+3. Paso a paso práctico.
+4. Hook visual con tono de secreto.
+5. Hook textual.
+6. Hook verbal.
+7. CTA para guardar o comentar una palabra clave.
+8. Límite claro para no regalar toda la oferta.
+
+Debe sentirse exclusivo, útil y generoso.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como estratega comparativo. Convierte el tema anterior en un guion usando el formato "Sin inversión vs Con inversión".
+
+Crea:
+1. Ruta sin inversión.
+2. Ruta con inversión.
+3. Qué ventaja y límite tiene cada ruta.
+4. Cuándo conviene cada una.
+5. Hook visual con pantalla dividida.
+6. Hook textual.
+7. Hook verbal.
+8. CTA para comentar qué ruta elige la audiencia.
+
+No hagas que una opción parezca inútil. Ambas deben sentirse válidas.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como copywriter de carruseles. Convierte el tema anterior en un carrusel usando el formato "Excusa vs Realidad".
+
+Crea:
+1. 5 excusas comunes de la audiencia.
+2. La realidad estratégica detrás de cada excusa.
+3. Un reencuadre empático.
+4. Texto para 6 slides.
+5. CTA para compartir o comentar.
+6. Caption con tono confrontativo elegante.
+
+Debe confrontar sin humillar.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como estratega de hábitos y resultados. Convierte el tema anterior en un guion usando el formato "Rutinas opuestas para resultados opuestos".
+
+Crea:
+1. Resultado A y rutina que lo produce.
+2. Resultado B y rutina que lo produce.
+3. Comparación entre ambas rutinas.
+4. Mecanismo que explica por qué funcionan diferente.
+5. Hook visual con dos escenarios.
+6. Hook textual.
+7. Hook verbal.
+8. CTA para elegir una rutina.
+
+Debe mostrar que los resultados son consecuencia de sistemas, no de suerte.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como comunicador educativo. Convierte el tema anterior en un guion usando el formato "Lo que se ve vs para qué sirve".
+
+Crea:
+1. Lo que la audiencia cree que está viendo.
+2. Para qué sirve realmente.
+3. Por qué ese detalle importa.
+4. Demostración visual.
+5. Hook visual con objeto, herramienta o acción.
+6. Hook textual.
+7. Hook verbal.
+8. CTA para guardar o pedir más ejemplos.
+
+El contenido debe tener efecto revelación.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como creador de tutoriales rápidos. Convierte el tema anterior en un guion usando el formato "Cómo hacer X en Y tiempo".
+
+Crea:
+1. Resultado específico.
+2. Tiempo realista para lograrlo.
+3. 3 pasos accionables.
+4. Qué mostrar en pantalla en cada paso.
+5. Hook visual con cronómetro o acción rápida.
+6. Hook textual.
+7. Hook verbal.
+8. CTA para guardar y aplicar.
+
+El tutorial debe ser útil incluso si la persona no compra todavía.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como director creativo. Convierte el tema anterior en una idea usando el formato "Personaje animado de tu rubro".
+
+Crea:
+1. Nombre del personaje.
+2. Personalidad y tono.
+3. Frase característica.
+4. Situación del video.
+5. Mini guion con inicio, conflicto y aprendizaje.
+6. Hook visual del personaje.
+7. Hook textual.
+8. CTA para seguir la serie.
+
+El personaje debe reforzar la marca, no distraer del mensaje.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como estratega educativo. Convierte el tema anterior en un guion usando el formato "3 formas de lograr un resultado".
+
+Crea:
+1. Un resultado deseado.
+2. Tres caminos diferentes para lograrlo.
+3. Para quién conviene cada camino.
+4. Ventaja y límite de cada opción.
+5. Hook visual con lista de 3.
+6. Hook textual.
+7. Hook verbal.
+8. CTA para comentar cuál camino elegiría.
+
+Las tres formas deben ser realmente distintas.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como analista de tendencias. Convierte el tema anterior en un guion usando el formato "Antes vs Ahora temporal".
+
+Crea:
+1. Cómo se hacía antes.
+2. Por qué antes funcionaba.
+3. Qué cambió.
+4. Qué funciona ahora.
+5. Qué debe dejar de hacer la audiencia.
+6. Hook visual con comparación temporal.
+7. Hook textual.
+8. Hook verbal.
+9. CTA para actualizar estrategia.
+
+Debe sonar actual, no nostálgico.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como consultor experto. Convierte el tema anterior en un carrusel usando el formato "Esto es lo que haría si estuviera ayudando a X".
+
+Crea:
+1. Perfil hipotético del cliente.
+2. Diagnóstico inicial.
+3. 3 acciones que implementarías.
+4. Por qué cada acción importa.
+5. Texto para 7 slides.
+6. CTA a diagnóstico, DM o llamada.
+7. Caption breve.
+
+Debe demostrar criterio profesional y metodología.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como experto en diagnóstico de audiencia. Convierte el tema anterior en un guion usando el formato "Señales de un problema".
+
+Crea:
+1. 5 señales específicas del problema.
+2. Qué significa cada señal.
+3. Nivel de urgencia de cada señal.
+4. Hook visual de alerta.
+5. Hook textual.
+6. Hook verbal.
+7. CTA para comentar cuántas señales tiene la audiencia.
+
+Debe generar autodiagnóstico sin sonar alarmista.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como experto claro y directo. Convierte el tema anterior en un guion usando el formato "Respuesta directa a pregunta común".
+
+Crea:
+1. Pregunta frecuente de la audiencia.
+2. Respuesta corta y honesta.
+3. Matiz importante.
+4. Ejemplo aplicado.
+5. Hook visual con caja de pregunta.
+6. Hook textual.
+7. Hook verbal.
+8. CTA para dejar otra pregunta.
+
+Evita responder con "depende" sin explicar.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como educador estratégico. Convierte el tema anterior en un guion usando el formato "Categoría A vs Categoría B".
+
+Crea:
+1. Dos categorías que la audiencia suele confundir.
+2. Definición simple de A.
+3. Definición simple de B.
+4. Diferencia clave.
+5. Cuándo usar o elegir cada una.
+6. Hook visual con dos columnas.
+7. Hook textual.
+8. CTA para comentar en qué categoría está.
+
+Debe ordenar mentalmente un concepto confuso.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como curador experto. Convierte el tema anterior en un guion usando el formato "Ranking del 1 al 10".
+
+Crea:
+1. 5 elementos a evaluar.
+2. Criterio de evaluación.
+3. Calificación de cada elemento.
+4. Justificación breve.
+5. Ganador o recomendación final.
+6. Hook visual con puntuaciones grandes.
+7. Hook textual.
+8. CTA para debatir en comentarios.
+
+Debe generar conversación sin perder autoridad.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como creador de contenido de curiosidad. Convierte el tema anterior en un guion usando el formato "Qué pasaría si X".
+
+Crea:
+1. Escenario hipotético potente.
+2. Primera consecuencia.
+3. Segunda consecuencia.
+4. Tercera consecuencia.
+5. Lección aplicable hoy.
+6. Hook visual imaginativo.
+7. Hook textual.
+8. Hook verbal.
+9. CTA para responder qué haría la audiencia.
+
+La hipótesis debe retener hasta el final.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como educador visual. Convierte el tema anterior en un guion usando el formato "Mal hecho vs Bien hecho".
+
+Crea:
+1. Acción hecha de forma incorrecta.
+2. Por qué falla.
+3. Acción hecha correctamente.
+4. Microajuste clave.
+5. Resultado esperado.
+6. Hook visual con comparación lado a lado.
+7. Hook textual.
+8. CTA para guardar la forma correcta.
+
+Debe mostrar más de lo que explica.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como investigador de contenido. Convierte el tema anterior en un guion usando el formato "Analicé X y encontré esto".
+
+Crea:
+1. Qué se analizó.
+2. Cuántos casos, ejemplos o patrones se revisaron.
+3. Hallazgo 1.
+4. Hallazgo 2.
+5. Hallazgo 3.
+6. Cómo aplicarlo.
+7. Hook visual con datos, capturas o reporte.
+8. CTA para pedir el análisis completo.
+
+Debe transmitir esfuerzo, evidencia y autoridad.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como creador de contenido guardable. Convierte el tema anterior en un guion o carrusel usando el formato "10 ideas que siempre funcionan".
+
+Crea:
+1. 10 ideas específicas.
+2. Una línea de explicación por idea.
+3. Por qué cada una funciona.
+4. Orden recomendado para máxima retención.
+5. Hook visual con número grande.
+6. Hook textual.
+7. CTA para guardar.
+
+No uses ideas de relleno. Cada idea debe poder aplicarse.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como creador de frameworks. Convierte el tema anterior en un guion usando el formato "X + Y + Z = combinación ganadora".
+
+Crea:
+1. Tres elementos clave.
+2. Qué aporta cada elemento.
+3. Por qué juntos producen el resultado.
+4. Ejemplo aplicado.
+5. Hook visual con ecuación de 3 partes.
+6. Hook textual.
+7. Hook verbal.
+8. CTA para pedir el framework.
+
+Debe sentirse como una receta estratégica completa.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como guionista de contenido emocional con humor. Convierte el tema anterior en un guion usando el formato "Miedos graciosos + miedo profundo".
+
+Crea:
+1. 3 miedos graciosos y reconocibles.
+2. Transición hacia el miedo profundo.
+3. Validación emocional.
+4. Aprendizaje o solución.
+5. Hook visual con humor.
+6. Hook textual.
+7. Hook verbal.
+8. CTA para comentar si se identificó.
+
+Debe pasar de risa a verdad emocional sin sentirse forzado.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como consultor estratégico. Convierte el tema anterior en un guion usando el formato "1 objetivo, 3 estrategias".
+
+Crea:
+1. Objetivo principal.
+2. Estrategia para principiante.
+3. Estrategia para nivel intermedio.
+4. Estrategia para nivel avanzado.
+5. Cuál estrategia recomiendas según el contexto.
+6. Hook visual con tres rutas.
+7. Hook textual.
+8. CTA para comentar el nivel actual.
+
+Debe mostrar profundidad y segmentación.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como copywriter viral. Convierte el tema anterior en un guion usando el formato "Nunca le enseñes esto a X".
+
+Crea:
+1. A quién supuestamente no debería enseñarse.
+2. Qué secreto, método o insight se revela.
+3. Por qué es valioso.
+4. Cómo aplicarlo.
+5. Hook visual con tono prohibido.
+6. Hook textual.
+7. Hook verbal.
+8. CTA para guardar antes de perderlo.
+
+El contenido debe cumplir la promesa del hook.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como analista de marca y cultura. Convierte el tema anterior en un carrusel usando el formato "Lecciones de figura pública".
+
+Crea:
+1. Figura pública sugerida.
+2. Contexto de por qué es relevante.
+3. 3 lecciones aplicables al nicho.
+4. Cómo puede aplicarlo la audiencia.
+5. Texto para 7 slides.
+6. Hook de portada.
+7. CTA para comentar la lección favorita.
+
+No cuentes una biografía; extrae estrategia.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como guionista de sketch educativo. Convierte el tema anterior en un guion usando el formato "Método antiguo personificado como viejito".
+
+Crea:
+1. Método antiguo que se va a personificar.
+2. Frases del personaje antiguo.
+3. Método moderno que lo reemplaza.
+4. Contraste de resultados.
+5. Hook visual del personaje.
+6. Guion con diálogo breve.
+7. CTA para actualizarse.
+
+El humor debe ser amable y estratégico, no ofensivo.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como educador creativo. Convierte el tema anterior en un guion usando el formato "Acción física + analogía visual".
+
+Crea:
+1. Concepto abstracto a explicar.
+2. Acción física que lo representa.
+3. Objeto o movimiento necesario.
+4. Desarrollo de la analogía.
+5. Aplicación al nicho.
+6. Hook visual.
+7. Hook textual.
+8. CTA para guardar la metáfora.
+
+La analogía debe ser clara y fácil de recordar.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como diseñador de contenido educativo premium. Convierte el tema anterior en un guion usando el formato "Infografía animada".
+
+Crea:
+1. Proceso o dato a visualizar.
+2. Elementos gráficos necesarios.
+3. Secuencia visual por escenas.
+4. Voz en off.
+5. Texto mínimo en pantalla.
+6. Hook visual animado.
+7. CTA para guardar o compartir.
+
+Debe sentirse visual, claro y de alto valor.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como guionista de contenido entretenido. Convierte el tema anterior en un guion usando el formato "Productos o métodos personificados peleando".
+
+Crea:
+1. Opción A como personaje.
+2. Opción B como personaje.
+3. Argumento de cada uno.
+4. Punto de tensión.
+5. Resolución con criterio experto.
+6. Hook visual de enfrentamiento.
+7. CTA para comentar equipo A o B.
+
+Debe entretener y educar al mismo tiempo.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como comunicador de marca personal. Convierte el tema anterior en un guion usando el formato "Respuesta a mensaje polémico".
+
+Crea:
+1. Mensaje polémico o crítica probable.
+2. Respuesta calmada y elegante.
+3. Qué parte puedes validar.
+4. Reencuadre experto.
+5. Cierre con postura clara.
+6. Hook visual con captura o texto del mensaje.
+7. CTA para opinar o enviar DM.
+
+Debe sonar firme, no defensivo.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como guionista educativo. Convierte el tema anterior en un guion usando el formato "Nuevo vs Veterano".
+
+Crea:
+1. Situación típica del nicho.
+2. Cómo reacciona un principiante.
+3. Cómo reacciona un experto.
+4. Lección principal.
+5. Hook visual con dos personajes o actitudes.
+6. Hook textual.
+7. CTA para comentar en qué nivel está.
+
+No hagas que el principiante parezca tonto; hazlo reconocible.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como psicóloga de marca y estratega de comunidad. Convierte el tema anterior en un carrusel usando el formato "Tipos de personalidad de tu audiencia".
+
+Crea:
+1. 4 tipos de audiencia.
+2. Nombre de cada tipo.
+3. Características.
+4. Frase que diría cada tipo.
+5. Qué necesita cada uno.
+6. Texto para 7 slides.
+7. CTA para comentar su tipo.
+
+Debe generar identificación y compartidos.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como creador de contenido faceless. Convierte el tema anterior en un guion usando el formato "Soluciones rápidas con post-its".
+
+Crea:
+1. Problema central.
+2. 3 soluciones cortas para escribir en post-its.
+3. Orden visual de aparición.
+4. Texto de apoyo en pantalla.
+5. Hook visual con mano pegando post-it.
+6. Hook textual.
+7. CTA para guardar.
+
+Cada post-it debe tener menos de 10 palabras.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como educador experto en simplificación. Convierte el tema anterior en un guion usando el formato "Explicación como si tuvieras 5 años".
+
+Crea:
+1. Concepto complejo.
+2. Analogía simple.
+3. Explicación sin jerga.
+4. Ejemplo cotidiano.
+5. Aplicación al nicho.
+6. Hook visual con objeto simple.
+7. CTA para comentar si se entendió.
+
+Debe ser simple sin perder precisión.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como creador de conversación. Convierte el tema anterior en un guion usando el formato "Preguntas incómodas del rubro".
+
+Crea:
+1. Pregunta incómoda pero estratégica.
+2. Por qué incomoda.
+3. Tu postura clara.
+4. Contexto que evita malinterpretaciones.
+5. Hook visual con pregunta grande.
+6. Hook verbal.
+7. CTA para responder en comentarios.
+
+Debe abrir conversación, no atacar.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como guionista de humor estratégico. Convierte el tema anterior en un guion usando el formato "Creencia errónea + acciones graciosas".
+
+Crea:
+1. Creencia errónea.
+2. 3 acciones graciosas que produce esa creencia.
+3. Realidad detrás del problema.
+4. Acción correcta.
+5. Hook visual de ironía suave.
+6. Texto en pantalla.
+7. CTA para enviar DM o comentar.
+
+El humor debe hacer que la persona se reconozca sin sentirse atacada.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como director audiovisual. Convierte el tema anterior en un guion usando el formato "Multi ángulos".
+
+Crea:
+1. Guion de 35 a 45 segundos.
+2. División por cortes de 1 a 2 segundos.
+3. Qué decir en cada ángulo.
+4. Cuándo acercar plano.
+5. Cuándo hacer pausa.
+6. Hook verbal fuerte.
+7. CTA final.
+
+El ritmo debe sentirse dinámico, directo y fácil de editar.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como educador faceless. Convierte el tema anterior en un guion usando el formato "Metáfora visual con objetos".
+
+Crea:
+1. Concepto a explicar.
+2. Objeto principal.
+3. Qué representa cada parte del objeto.
+4. Secuencia visual con manos.
+5. Texto sobreimpreso.
+6. Hook visual.
+7. CTA para leer el caption o guardar.
+
+La metáfora debe entenderse incluso sin voz.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como experto en herramientas digitales. Convierte el tema anterior en un carrusel usando el formato "Carrusel App x App".
+
+Crea:
+1. Resultado que se quiere lograr.
+2. 3 a 5 herramientas o pasos.
+3. Cómo se conectan entre sí.
+4. Flujo de trabajo completo.
+5. Texto para 7 slides.
+6. Hook de portada.
+7. CTA para pedir links o guardar.
+
+No listes herramientas sin explicar el sistema.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como storyteller. Convierte el tema anterior en un guion usando el formato "B-roll Storytelling".
+
+Crea:
+1. Historia breve.
+2. 5 clips B-roll que acompañen la historia.
+3. Texto sobreimpreso para cada clip.
+4. Punto de giro emocional.
+5. Lección final.
+6. CTA suave.
+7. Caption complementario.
+
+Debe poder grabarse sin mostrar el rostro.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como guionista de contenido inmersivo. Convierte el tema anterior en un guion usando el formato "POV inmersivo".
+
+Crea:
+1. Escenario POV.
+2. Texto en segunda persona.
+3. Sensación emocional que debe vivir la audiencia.
+4. Secuencia de clips.
+5. Hook visual.
+6. Hook textual.
+7. CTA para responder o comprar.
+
+El espectador debe sentirse dentro de la escena.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como guionista de storytelling. Convierte el tema anterior en un guion usando el formato "Plot twist".
+
+Crea:
+1. Premisa inicial.
+2. Expectativa que tendrá la audiencia.
+3. Desarrollo de tensión.
+4. Giro inesperado.
+5. Nueva interpretación después del giro.
+6. Lección aplicable.
+7. Hook visual.
+8. CTA para comentar si lo vio venir.
+
+El giro debe ser coherente, no clickbait vacío.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como director de mini documental. Convierte el tema anterior en un guion usando el formato "Mini documental / Vlog".
+
+Crea:
+1. Contexto del proceso.
+2. Meta o desafío.
+3. Obstáculo.
+4. Acciones reales a grabar.
+5. Reflexión durante el proceso.
+6. Resultado o avance.
+7. CTA para seguir la serie.
+
+Debe tener narrativa, no solo clips bonitos.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como creador de contenido faceless. Convierte el tema anterior en un guion usando el formato "Faceless clips + texto".
+
+Crea:
+1. 5 clips que se pueden grabar sin rostro.
+2. Texto sobreimpreso para cada clip.
+3. Ritmo de edición.
+4. Hook visual del primer segundo.
+5. Hook textual.
+6. CTA final.
+7. Caption de apoyo.
+
+El mensaje debe ser claro incluso sin voz.`,
+
+  `TEMA O IDEA BASE: [PEGA AQUÍ TU TEMA]
+ÁNGULO / FRASE INICIAL: [PEGA AQUÍ TU FRASE]
+NICHO: [NICHO]
+AUDIENCIA: [AUDIENCIA]
+OFERTA / PRODUCTO: [OFERTA O PRODUCTO]
+OBJETIVO DEL CONTENIDO: [VENDER / EDUCAR / VIRALIZAR / CONECTAR]
+
+Actúa como copywriter de conversión. Convierte el tema anterior en un guion usando el formato "Problema → Solución rápida".
+
+Crea:
+1. Problema específico.
+2. Por qué duele o cuesta dinero, tiempo o energía.
+3. Solución en máximo 3 pasos.
+4. Resultado esperado.
+5. Hook visual con problema claro.
+6. Hook textual.
+7. Hook verbal.
+8. CTA a DM, guardar o comprar.
+
+Debe ser directo, útil y orientado a acción.`
+];
+
+videoFormats.forEach((format, index) => {
+  if (upgradedVideoFormatPrompts[index]) {
+    format.prompt = upgradedVideoFormatPrompts[index];
+  }
+});
+
+        // Compact Ecommerce Data (20 formats)
+        const ecommerceFormats = [
+            {n:"1. Producto en uso", w:"Siempre. Base de pauta.", r:"Macro, ASMR, buena luz.", h:"Lo único que necesitas para [Beneficio].", c:"Comenta QUIERO y te envío link.", p:"Dame 5 secuencias ASMR de [Producto].", e:"Textura de crema premium en la piel."},
+            {n:"2. Unboxing sensorial", w:"Crear experiencia premium.", r:"Micrófono cerca de las manos, caja crujiendo.", h:"Mira lo que me acaba de llegar...", c:"Consíguelo en la bio.", p:"Guion para unboxing ASMR de [Producto].", e:"Rompiendo sello de caja negra mate."},
+            {n:"3. UGC testimonial", w:"Generar confianza (Prueba social).", r:"Estilo selfie, voz natural de cliente real.", h:"Probé [Producto] por 30 días y pasó esto.", c:"Usa mi código de descuento.", p:"Guion UGC para creador recomendando [Producto].", e:"Chica contando cómo se curó el acné."},
+            {n:"4. Antes / Después", w:"Para productos de transformación visual.", r:"Pantalla dividida o transición brusca.", h:"De [Dolor visual] a [Resultado visual].", c:"Transforma tu [X] hoy en el link.", p:"Estructura Antes/Después visual para [Producto].", e:"Rostro opaco vs Rostro brillante con serum."},
+            {n:"5. Esto o Esto (Comparativa)", w:"Facilitar decisión de compra.", r:"Sostener dos opciones y señalar.", h:"¿Cuál elegirías tú para [Situación]?", c:"Comenta tu favorito.", p:"Guion comparando mi [Producto A] y [Producto B].", e:"Bolso beige para día vs Bolso negro para noche."},
+            {n:"6. No compres esto si...", w:"Filtrar clientes, usar curiosidad.", r:"Serio, rompiendo patrón comercial.", h:"No compres [Producto] si estás buscando [Falsa expectativa].", c:"Si eres de los que busca calidad, DM.", p:"Guion de 'No compres si' para cualificar compradores de [Producto].", e:"No compres esta cafetera si te gusta el café instantáneo."},
+            {n:"7. 3 Formas de usarlo", w:"Educar sobre versatilidad.", r:"Cortes rápidos cambiando contexto.", h:"3 Formas de llevar [Producto] que no sabías.", c:"Guarda para inspirarte.", p:"Idea visual de 3 usos inusuales para [Producto].", e:"3 formas de estilizar una camisa blanca."},
+            {n:"8. Errores al elegir X", w:"Autoridad de marca.", r:"Apuntando a texto en pantalla.", h:"El error #1 al comprar [Categoría].", c:"Elige bien, link en bio.", p:"Guion: Errores comunes que comete la gente al comprar algo de mi industria.", e:"Error al comprar sillas de oficina (Postura)."},
+            {n:"9. Lo que nadie te muestra", w:"Transparencia, destrozar competencia.", r:"Enfocar detalles internos/costuras/material.", h:"Lo que las marcas de [Categoría] te ocultan.", c:"Nosotros somos transparentes. Compruébalo.", p:"Guion sobre un detalle de calidad oculto de mi [Producto].", e:"Mostrando las costuras reforzadas vs costuras chinas."},
+            {n:"10. Barato vs Premium", w:"Justificar precio alto.", r:"Partir la pantalla, zoom a detalles.", h:"Por qué [Producto] cuesta $100 y no $20.", c:"Invierte en calidad. Link abajo.", p:"Guion contrastando por qué mi producto Premium es mejor a largo plazo.", e:"Zapatos de cuero real vs cuero sintético que se pela."},
+            {n:"11. Reacción primer uso", w:"Autenticidad pura.", r:"Cara de sorpresa legítima.", h:"Mi reacción genuina al probar [Producto].", c:"Pruébalo tú también.", p:"Estructura de 'Reacción genuina' para [Producto].", e:"Primera vez probando unos auriculares con noise cancelling."},
+            {n:"12. Stock limitado (Urgencia)", w:"Fines de mes / Black Friday.", r:"Mostrando estantes vaciándose o cajas listas.", h:"Solo quedan [X] unidades de nuestro best seller.", c:"Corre antes del Sold Out.", p:"Guion generando escasez ética para vender las últimas unidades de [Producto].", e:"Mostrando las últimas 5 cajas de la edición limitada."},
+            {n:"13. Cómo se ve en vida real", w:"Eliminar duda de 'expectativa vs realidad'.", r:"Luz de día, cero filtros, calle/oficina.", h:"Sin filtros: Así se ve [Producto] en la calle.", c:"Pídelo hoy mismo.", p:"Ideas visuales para mostrar [Producto] en entornos cotidianos 100% reales.", e:"Un vestido a la luz del sol vs luz de estudio."},
+            {n:"14. Empacando pedido", w:"Construir comunidad y reciprocidad.", r:"Vista cenital (desde arriba) de la caja.", h:"Empaca conmigo el pedido de [Nombre].", c:"Haz tu pedido y quizás lo empaquemos en TikTok.", p:"Narrativa de 'Empaca conmigo' contando la historia detrás del negocio.", e:"Poniendo papel seda, sticker y carta a mano."},
+            {n:"15. Cliente usando producto", w:"Fidelización y prueba.", r:"Repostear stories de clientes con música.", h:"Cómo ustedes usan [Producto].", c:"Etiquétanos para salir aquí.", p:"Guion para voz en off sobre clips de clientes felices.", e:"Montaje de 10 clientas usando el labial de la marca."},
+            {n:"16. Duda de talla/color", w:"Manejo de objeciones operativas.", r:"Demostrar físicamente la medida o diferencia.", h:"Me preguntan mucho si la talla [X] da de sí.", c:"Mira la guía de tallas en el link.", p:"Guion resolviendo la objeción logística más grande de [Producto].", e:"Mostrando cuánto estira realmente un pantalón deportivo."},
+            {n:"17. Ranking de la tienda", w:"Facilitar entrada a nuevos clientes.", r:"Mostrando top 3 rápido.", h:"Top 3 favoritos de nuestra comunidad.", c:"Cuál probarías tú? Comenta.", p:"Guion clasificando los 3 best-sellers de mi marca.", e:"Top 3 velas aromáticas más vendidas este otoño."},
+            {n:"18. Producto A vs Producto B", w:"Guiar a clientes indecisos.", r:"Uno en cada mano.", h:"¿[Producto A] o [Producto B]? Te ayudo a decidir.", c:"DM con la palabra AYUDA.", p:"Guion de 'Batalla de productos' internos para segmentar al comprador.", e:"Serum de Vit C vs Serum de Ácido Hialurónico."},
+            {n:"19. Mitos del producto", w:"Romper falsas creencias de la industria.", r:"Cruzando los brazos, tono experto.", h:"3 Mitos sobre [Categoría de producto] que debes ignorar.", c:"Educa tu compra. Link en bio.", p:"Desmiente 3 mitos que frenan la compra de [Producto].", e:"Mito: Las sartenes de acero inoxidable siempre se pegan."},
+            {n:"20. Detrás de cámaras", w:"Humanizar la marca física.", r:"Taller desordenado, diseño real.", h:"Lo que no ves de [Marca].", c:"Apoya el talento local.", p:"Narrativa para mostrar el sudor y trabajo detrás de fabricar [Producto].", e:"Proceso de teñir cuero a mano para hacer una billetera."}
+        ];
+
+        // Compact High Ticket Data (15 formats)
+        const htFormats = [
+            {n:"1. Diagnóstico Error Caro", o:"Generar consciencia de pérdida.", w:"MoF, calentar leads.", h:"El error que te cuesta [Dinero] al mes.", c:"DM 'AUDITORÍA'.", p:"Crea guion de diagnóstico de un error estratégico profundo en [Nicho].", e:"No tener backend de ventas."},
+            {n:"2. Caso de Cliente", o:"Prueba social masiva.", w:"BoF, cierre de ventas.", h:"Cómo [Cliente] pasó de [A] a [B] en [Tiempo].", c:"Agenda llamada para tu caso.", p:"Estructura un caso de éxito enfocándote en el obstáculo superado, no solo en la victoria.", e:"Caso de agencia que facturó 20k instalando setter."},
+            {n:"3. Objeción Elegante", o:"Destruir el 'es muy caro'.", w:"Lanzamientos, open cart.", h:"Me dijeron que mi programa es caro.", c:"Si valoras tu tiempo, DM.", p:"Guion respondiendo a la objeción de precio/tiempo usando reencuadre lógico de valor.", e:"Caro es seguir perdiendo clientes por no saber cerrar."},
+            {n:"4. Lo que no se ve del proceso", o:"Aumentar valor percibido.", w:"Educar sobre el servicio.", h:"Esto es lo que pasa cuando contratas mi servicio.", c:"¿Quieres este nivel de detalle? Link bio.", p:"Guion revelando el nivel de profundidad técnica de mi servicio de [Servicio].", e:"Mostrando el tablero de Notion que le entregas a clientes."},
+            {n:"5. Antes de mí / Después de mí", o:"Contraste emocional y operativo.", w:"Promoción directa.", h:"Tu negocio antes de [Mi Método] vs Después.", c:"DM 'TRANSFORMAR'.", p:"Guion contrastando el caos de trabajar sin mi [Método] vs el orden de aplicarlo.", e:"Vivir esclavo del DM vs Tener agenda llena automática."},
+            {n:"6. Sola vs Acompañada", o:"Vender mentoría sobre cursos.", w:"Elevación de ticket.", h:"Puedes hacerlo solo, sí. Pero mira el costo.", c:"Ahorra meses de prueba, agenda.", p:"Guion justificando por qué pagar por acompañamiento 1a1 es más barato a largo plazo.", e:"Hacer embudos viendo YouTube vs Tener un consultor revisándolo en vivo."},
+            {n:"7. Muestra interna del servicio", o:"Tangibilizar lo intangible.", w:"Mitigar riesgo de compra.", h:"Así se ve por dentro mi programa de $2k.", c:"Últimos 2 cupos.", p:"Guion para mostrar la plataforma o entregables físicos/digitales de mi oferta HT.", e:"Tour rápido por la comunidad de Slack y portal de alumnos."},
+            {n:"8. Desglose de Método", o:"Autoridad intelectual.", w:"MoF, posicionamiento.", h:"El sistema E.N.C que usamos para escalar.", c:"DM 'SISTEMA'.", p:"Ayúdame a nombrar y desglosar mi metodología en 3 pasos lógicos.", e:"Explicando el marco 'Atracción, Nutrición, Cierre'."},
+            {n:"9. Análisis de cuenta ajena", o:"Demostrar ojo clínico.", w:"Captación de leads cualificados.", h:"Audité este negocio y encontré esta fuga brutal.", c:"Si quieres que analice el tuyo, aplica abajo.", p:"Guion analizando un error público de un negocio X para demostrar mi capacidad estratégica.", e:"Analizando por qué el funnel de X influencer no está convirtiendo."},
+            {n:"10. 3 Señales de necesidad", o:"Autodiagnóstico de urgencia.", w:"Inicio de embudo de ventas.", h:"3 Señales críticas de que necesitas un estratega hoy.", c:"DM 'URGENTE'.", p:"Enumera 3 síntomas operativos graves que indican que el cliente necesita mi [Servicio] urgente.", e:"1. Trabajas 12h, 2. Facturación estancada 6 meses, 3. Dependes de referidos."},
+            {n:"11. Por qué publicas y no vendes", o:"Tocar el dolor más común del creador.", w:"Dolor mercado B2B.", h:"Publicas todos los días, tienes likes, pero $0 ventas.", c:"Instala un sistema de conversión. DM.", p:"Guion explicando la diferencia entre tráfico (likes) y retención/conversión (ventas).", e:"El mito de que el algoritmo te da clientes mágicamente."},
+            {n:"12. Sesión por dentro", o:"Cercanía y prueba de autoridad.", w:"Mostrar expertise en vivo.", h:"Escucha lo que le dije a mi cliente hoy.", c:"Agenda tu sesión.", p:"Guion basado en un B-roll de una sesión de Zoom con texto del consejo más duro que di hoy.", e:"Clip borroso de Zoom + Texto de un consejo de mindset agresivo."},
+            {n:"13. Lo que reviso antes de aceptar", o:"Exclusividad y cualificación.", w:"Filtro anticlientes malos.", h:"No trabajo con cualquiera. Esto reviso primero.", c:"Si cumples, aplica.", p:"Guion listando mis 3 banderas verdes (requisitos) para aceptar a un cliente HT.", e:"Reviso: Mentalidad de inversión, producto validado, tiempo para ejecutar."},
+            {n:"14. Preguntas de estrategia", o:"Demostrar profundidad de análisis.", w:"Posicionamiento como C-Level/Director.", h:"Las 3 preguntas incómodas que le hago a un negocio.", c:"Responde estas preguntas con mi equipo.", p:"Lista 3 preguntas de alto nivel estratégico que hago en auditorías de [Nicho].", e:"¿Cuál es tu costo de adquisición? (Casi nadie lo sabe)."},
+            {n:"15. Error de mentalidad bloqueadora", o:"Cambiar el paradigma del lead.", w:"Educación profunda.", h:"Tu problema no es la estrategia, es tu mentalidad de escasez.", c:"Eleva tu estándar. DM.", p:"Guion confrontando una creencia tóxica/pobre que impide a mi cliente escalar.", e:"Pensar que 'cobrar más' asustará a los clientes correctos."}
+        ];
+
+        // Compact Faceless Data (20 formats)
+        const facelessFormats = [
+            {n:"1. Manos escribiendo", r:"Top-down view escribiendo en diario de cuero.", h:"El secreto de la retención... (Texto visual)."},
+            {n:"2. Post-it en laptop", r:"Mano pega post-it en la pantalla de laptop.", h:"Regla #1 antes de publicar."},
+            {n:"3. Playa/paisaje + texto", r:"Video de mar calmado, texto largo centrado.", h:"Me tomó 3 años entender esto..."},
+            {n:"4. Café + libreta", r:"Revolviendo café frente a libreta de notas.", h:"Mi rutina matutina para facturar X."},
+            {n:"5. Pantalla de celular", r:"Scroll o mostrando dashboard de Stripe/Notion.", h:"Así se ve un sistema que funciona."},
+            {n:"6. Capturas de resultados", r:"Gráfico subiendo con música épica y texto.", h:"Lo que pasa cuando aplicas el Método X."},
+            {n:"7. B-roll de escritorio", r:"Tomas cinemáticas de tu set (teclado, monitor, planta).", h:"El ambiente dicta tu éxito."},
+            {n:"8. Empaque de producto", r:"ASMR envolviendo en papel seda.", h:"Preparando orden #402."},
+            {n:"9. Time-lapse", r:"Cámara rápida limpiando oficina o trabajando.", h:"3 horas de trabajo en 10 segundos."},
+            {n:"10. Fondo de color + texto", r:"Diseño gráfico puro minimalista.", h:"3 Red flags de tu negocio."},
+            {n:"11. Collage estético", r:"Fotos estéticas que cambian al ritmo del beat.", h:"El moodboard de una CEO de éxito."},
+            {n:"12. POV Inmersivo", r:"Cámara a la altura de los ojos abriendo una puerta o caja.", h:"POV: Tomas la decisión que cambia todo."},
+            {n:"13. Texto manuscrito digital", r:"Animación de texto escribiéndose (tipo iPad).", h:"Nota para mí misma..."},
+            {n:"14. Pizarra macro", r:"Plano cerrado de un rotulador escribiendo en pizarra blanca.", h:"Estructura del funnel maestro."},
+            {n:"15. Objetos simbólicos", r:"Jugando con piezas de ajedrez o fichas.", h:"Tu estrategia de contenido ahora mismo..."},
+            {n:"16. Metáfora visual", r:"Dejar caer una gota de tinta en agua clara.", h:"Así de rápido un mal comentario ensucia tu marca."},
+            {n:"17. Screenshot + análisis", r:"Captura de tweet o post resaltando con marcador digital.", h:"Analizando esta obra maestra de copy."},
+            {n:"18. Voz en off misteriosa", r:"B-roll oscuro + voz profunda procesada.", h:"Escúchame atentamente..."},
+            {n:"19. Lista visual rápida", r:"Bullet points apareciendo velozmente en pantalla.", h:"Checklist de auditoría de marca."},
+            {n:"20. Carrusel puro", r:"Diseño multipágina sin foto tuya, solo infografía.", h:"Anatomía de una oferta irresistible."}
+        ];
+
+        // Compact Hooks Data
+        const hooksDB = {
+            "Dolor": ["Si estás haciendo [X] y no ves [Y], te falta esto.", "El error silencioso que te cuesta [Métrica].", "No es falta de esfuerzo, es falta de [Sistema].", "Si te está pasando esto, no lo ignores más.", "Por qué [Problema] sigue destruyendo tu [Resultado]."],
+            "Deseo": ["Cómo lograr [Resultado] sin [Sacrificio].", "La forma más simple de pasar de A a B.", "Si quieres [Resultado], empieza hoy por esto.", "El camino más corto para [Resultado] sin complicarte.", "El sistema exacto para lograr [Resultado] en 30 días."],
+            "Controversia": ["Todos te dicen que hagas X, pero te ocultan esto.", "La mayoría usa mal [Herramienta].", "No necesitas más X, necesitas Y.", "Esto va a incomodar a los gurús de [Nicho].", "La estrategia que todos copian pero nadie entiende."],
+            "Autoridad": ["Analicé 100 casos y encontré este patrón.", "Esto haría si empezara desde cero hoy.", "Después de trabajar con marcas Top, vi esto.", "La diferencia entre quien avanza y quien se estanca.", "Audité a 20 negocios este mes y todos fallan aquí."],
+            "Venta": ["Antes de comprar [Servicio], revisa esto vital.", "Esto es lo que incluye realmente una oferta premium.", "Si estás entre A y B, esta solución es para ti.", "No compres [Producto] si buscas [Falsa expectativa].", "Este servicio es solo para ti si quieres [Resultado]."],
+            "Curiosidad": ["Nadie habla de esto en la industria.", "Me iba a guardar esto, pero debes verlo.", "Hay una parte del proceso que todos ignoran.", "Esto cambiará cómo ves el [Nicho] para siempre.", "Cuando entendí esto, dejé de perder [Tiempo/Dinero]."],
+            "Negativos": ["Si quieres seguir estancado, sigue haciendo esto.", "La forma más rápida de arruinar tu negocio.", "Esto te cuesta clientes sin que lo notes.", "La razón de tu fracaso no es la que crees.", "Este hábito silencioso destruye tu facturación."],
+            "Ecommerce": ["No compres [Producto] si buscas [Cosa incorrecta].", "3 Formas ocultas de usar [Producto].", "Lo que nadie te muestra de [Producto].", "Antes de elegir tu [Producto], mira esto.", "¿Cuál elegirías hoy: A o B?"],
+            "High Ticket": ["Si tu negocio factura pero no tienes vida, mira esto.", "Publicar 3 veces al día no significa vender más.", "El error que aleja a los clientes high ticket.", "Lo que reviso antes de aceptar un cliente de $5k.", "No necesitas más seguidores, necesitas cualificación."]
+        };
+
+        const ctasDB = {
+            "CTA suave": ["Guárdalo para revisarlo después.", "Sígueme para más contenido estratégico.", "Compártelo con alguien que necesite verlo hoy.", "Respóndeme con un 'yo' si esto te representa.", "Vuelve a este video cuando dudes de tu proceso."],
+            "CTA de conversación": ["Respóndeme INFO y te cuento el detrás de escena.", "Escríbeme GUÍA al DM y te paso el documento.", "Mándame tu caso por privado y te digo qué haría.", "Comenta QUIERO y te envío los detalles exactos.", "Responde con tu nicho y te doy una idea."],
+            "CTA de venta": ["Escríbeme ENTRO y te paso el link de pago.", "Responde MENTORÍA si quieres aplicar al programa.", "Comenta VIP y te envío la oferta privada.", "Agenda una llamada si quieres que lo implemente por ti.", "Responde ESCALAR si quieres ver si calificas."],
+            "CTA ecommerce": ["Escríbeme tu talla y te aparto uno.", "Responde STOCK para confirmar si aún queda.", "Comenta CATÁLOGO y te lo envío completo.", "Vota cuál color quieres que hagamos la próxima semana.", "Responde QUIERO y te paso el link con -10%."],
+            "CTA comunidad": ["Escríbeme COMUNIDAD y te cuento qué hacemos dentro.", "Responde ENTRAR si quieres rodearte de ganadores.", "Comenta CLUB para unirte a la sesión de hoy.", "Si quieres hacerlo acompañada, responde GRUPO.", "Mándame COMUNIDAD y te paso el acceso VIP."],
+            "CTA lead magnet": ["Comenta GUÍA y te la envío automáticamente.", "Responde CHECKLIST y te lo paso por DM.", "Escríbeme CLASE y te mando el acceso al taller.", "Comenta PLANTILLA y te comparto el Notion.", "Responde RECURSO para descargar el mapa estratégico."]
+        };
+
+        const visualHooksDB = {
+            "Sin rostro": ["Mano escribiendo frase polémica.", "Post-it pegado en laptop bruscamente.", "Mar abierto u olas (calma) + texto agresivo.", "Pantalla de celular subiendo métrica verde.", "Cronómetro iniciando en iPad.", "Café derramándose ligeramente (caos visual).", "Checklist física siendo marcada con fuerza.", "Laptop cerrándose bruscamente.", "Hoja siendo arrugada y lanzada.", "Manos abriendo caja negra lentamente."],
+            "Frente a cámara": ["Rostro en silencio 2 segundos (Incomodidad).", "Mirada seria de desaprobación + texto.", "Sostener un objeto extraño desde el inicio.", "Zoom in rápido a los ojos + corte.", "Giro de cabeza brusco hacia la cámara.", "Señalar agresivamente un texto flotante.", "Suspirar profundamente antes de hablar.", "Cambio de expresión (de sonrisa a seriedad).", "Plano muy cerrado, casi incómodo.", "Sentarse de golpe en la silla frente a cámara."],
+            "Ecommerce": ["Producto cayendo en cámara lenta sobre la mesa.", "Romper sello de seguridad (ASMR).", "Split screen: Piel con acné vs Piel de cristal.", "Cliente real reaccionando con sorpresa.", "Poner versión premium al lado de la versión china barata.", "Caja siendo cerrada y pegada con tape.", "Mano acariciando textura del producto.", "Producto brillando bajo el sol real.", "Pila gigante de cajas listas para enviar.", "Tirar líquido sobre ropa impermeable (Demostración)."],
+            "High ticket": ["Pantalla de Stripe/PayPal con diagnóstico oculto.", "Laptop mostrando calendario lleno de Zoom.", "Dibujando embudo complejo en pizarra de vidrio.", "Captura de pantalla de un DM de cliente facturando.", "B-roll borroso de una sesión privada de consultoría.", "Notas tachadas en rojo en una auditoría física.", "Diagrama de Miro/Whimsical gigante.", "Documento PDF premium abierto en iPad.", "Tú caminando con traje/elegante analizando el mercado.", "Reloj caro o café premium + Laptop (Lifestyle)."]
+        };
+
+        const peaksDB = {
+            "Reversión del riesgo": ["Y esto no te tomará más de 30 segundos.", "No necesitas cambiar todo, solo ajustar esta pieza.", "Y lo mejor: puedes probarlo hoy sin gastar un centavo."],
+            "Autoridad": ["Lo vi repetirse exactamente en más de 20 auditorías.", "Las marcas que dominan el mercado tienen solo esto en común.", "Esto aparece siempre que analizo una cuenta estancada."],
+            "Controversia": ["Pero aquí viene la parte que casi nadie quiere aceptar.", "Esto contradice todo lo que los 'gurús' te están vendiendo.", "La cruda realidad es que la mayoría lo está haciendo al revés."],
+            "Historia personal": ["Yo también lo hacía así... hasta que casi quiebro.", "Entender esto me habría ahorrado meses de estrés.", "Ojalá alguien me hubiera cacheteado con esta verdad antes."],
+            "Presunción negativa": ["Y no, no necesitas publicar 5 veces al día bailando.", "Y no, no se trata de tener más seguidores de adorno.", "Y no, esto no es otro consejo genérico de mentalidad."],
+            "Giro inesperado": ["Pero adivina qué... el problema real no era ese.", "La verdadera solución estaba donde menos lo esperábamos.", "Lo que parecía un error catastrófico, era en realidad el sistema perfecto."]
+        };
+
+        const structuresDB = [
+            {n:"1. Dolor → Solución → Invitación", p:"El framework más clásico y efectivo de conversión directa.", w:"Venta directa (BoF), historias de IG, lanzamientos.", s:"1. Agitar el dolor principal de forma empática.\n2. Explicar por qué las soluciones antiguas no sirven.\n3. Presentar tu método como la salvación lógica.\n4. Invitar (CTA) a calificar."},
+            {n:"2. Problema → Error → Ajuste → Resultado", p:"Muestra que sabes exactamente dónde están fallando.", w:"Contenido de valor profundo, carruseles educativos.", s:"1. Identificar el problema que el cliente sabe que tiene.\n2. Mostrar el error que están cometiendo intentando solucionarlo.\n3. Enseñar el 'micro-ajuste' estratégico que propones.\n4. Mostrar el resultado inmediato de aplicar tu ajuste."},
+            {n:"3. Antes → Después → Puente", p:"Framework narrativo clásico (Before-After-Bridge).", w:"Casos de éxito, testimonios, historias personales.", s:"1. Pintar el cuadro oscuro del 'Antes' (Caos, frustración).\n2. Pintar el paraíso del 'Después' (Paz, facturación, éxito).\n3. El puente: Explicar exactamente cómo pasaste de A hacia B (Tu servicio)."},
+            {n:"4. Mito → Verdad → Método", p:"Para posicionamiento de autoridad destructiva.", w:"Controversia, diferenciación de marca, reels virales.", s:"1. Destruir un mito popular de la industria agresivamente.\n2. Revelar la verdad incómoda que nadie dice.\n3. Explicar cómo tu método/producto se alinea con esa verdad.\n4. CTA de autoridad."},
+            {n:"5. Caso Cliente → Obstáculo → Acción → Resultado", p:"Storytelling aplicado a prueba social.", w:"Venta high ticket, correos electrónicos, hilos.", s:"1. Presentar al cliente (que se parezca a tu avatar).\n2. Explicar el obstáculo casi insuperable que tenía.\n3. Detallar la acción heroica (tu intervención estratégica).\n4. El gran resultado final."},
+            {n:"6. Historia Personal → Lección → CTA", p:"Conexión humana radical.", w:"Domingos, contenido reflexivo, B-roll faceless.", s:"1. Narrar una anécdota vulnerable o un error de tu pasado.\n2. Extraer la lección de negocios/vida.\n3. Vincular esa lección a la filosofía de tu marca.\n4. CTA suave de retención."},
+            {n:"7. Objeción → Reencuadre → Oferta", p:"Manejo de objeciones preventivo.", w:"Etapa final de un embudo, carrito abierto.", s:"1. Sacar a la luz la objeción ('Sé que piensas que X').\n2. Reencuadrar (Cambiar la perspectiva, ej. 'X no es gasto, es filtro').\n3. Anular el riesgo.\n4. Presentar la oferta irresistible."},
+            {n:"8. Chisme → Participación → Revelación → Valor", p:"Entretenimiento convertido en estrategia.", w:"Generar engagement brutal y comentarios.", s:"1. Contar una historia a medias o un 'chisme' del sector.\n2. Pedir a la audiencia que adivine el final.\n3. Revelar el desenlace sorpresivo.\n4. Aterrizar el chisme en una lección de valor profundo."},
+            {n:"9. Hook Negativo → Oportunidad → Promesa", p:"Aversión a la pérdida seguida de salvación.", w:"Generar clics urgentes, ads.", s:"1. Hook aterrador ('Si haces X, vas a quebrar').\n2. Explicar la ventana de oportunidad actual (El mercado cambió).\n3. Los 3 pasos para aprovechar la oportunidad.\n4. Promesa fuerte y CTA."},
+            {n:"10. Estructura de Alta Conversión Continua", p:"El sistema E.N.C (Enganche, Nutrición, Cierre).", w:"El estándar de oro para Reels/TikToks.", s:"1. Hook de 3 segundos visual+verbal.\n2. Pico de interés inmediato (Transición).\n3. Contexto rápido (10s).\n4. Aporte de valor táctico profundo (15s).\n5. Promesa ('Si aplicas esto...').\n6. CTA directo (DM o Link)."},
+            {n:"11. Storytelling Emocional (El Viaje del Héroe mini)", p:"Framework literario comprimido.", w:"Lanzamientos, videos de 'Sobre mí'.", s:"1. Situación ordinaria y llamada a la aventura.\n2. El gran fracaso o tensión máxima.\n3. El descubrimiento de la herramienta secreta (Epifanía).\n4. La transformación (Convertirse en el mentor de otros)."},
+            {n:"12. Mini Documental / Proceso", p:"Genera respeto por el trabajo duro.", w:"Vlogs, YouTube shorts, Behind the scenes.", s:"1. Establecer la meta épica y el límite de tiempo.\n2. Mostrar el proceso rudo (B-roll, sudor, pantalla).\n3. El contratiempo inesperado.\n4. La superación y el avance final.\n5. Reflexión de cierre."}
+        ];
+
+        const promptsIA = [
+            "Actúa como un estratega viral experto en neuroventas. Mi nicho es [NICHO], vendo [OFERTA]. Crea 1 guion de Reel usando el formato 'Problema -> Ajuste -> Resultado'. Incluye hook visual, texto en pantalla, y guion narrado persuasivo. Termina con un CTA para guardar.",
+            "Actúa como copywriter premium. Mi objetivo es educar sobre [TEMA] a [AVATAR]. Crea un carrusel de 6 slides. Usa un tono elegante pero directo. Slide 1 debe ser un título rompedor. Slides 2-5 contenido táctico sin relleno. Slide 6 CTA a DM.",
+            "Soy de la industria [NICHO]. Quiero replicar el éxito de este formato: 'Malo vs Bueno vs Excelente'. Adapta esta estructura a mi negocio, comparando la forma en que mi competencia hace [ACCIÓN] vs cómo lo hago yo de forma premium. Dame 3 variaciones.",
+            "Actúa como ingeniero de prompts para TikTok. Dame 20 hooks (ganchos de los primeros 3s) para mi audiencia que sufre de [DOLOR]. Divídelos en: 5 de controversia, 5 de curiosidad, 5 de autoridad, 5 de empatía. Cero frases genéricas como 'Te enseño' o 'Descubre'.",
+            "Mi oferta cuesta [PRECIO]. Necesito 10 CTAs (Llamados a la acción) que no suenen desesperados. Quiero que filtren a los curiosos y solo atraigan a gente dispuesta a invertir, incitándolos a enviarme un DM con una palabra clave.",
+            "Crea una secuencia de 5 Historias de Instagram (Stories) estilo 'Soap Opera' (Telenovela). Objetivo: Vender [OFERTA]. Slide 1: Hook misterioso. Slide 2-3: Desarrollo del problema. Slide 4: Epifanía. Slide 5: Oferta + Link. Dame el texto de cada historia.",
+            "Quiero crear un Reel Faceless (sin mostrar rostro) estético. Dame la idea visual (qué grabar en B-roll de fondo) y redacta un texto de 4 párrafos cortos y reflexivos para poner en pantalla. El tema es cómo superar la ansiedad de [DOLOR DE TU NICHO].",
+            "Soy un Ecommerce de [PRODUCTO]. Crea un guion para un video 'ASMR / Producto en uso'. Describe exactamente los sonidos que deben destacar, qué acciones físicas debe hacer la mano del modelo, y los 3 textos cortos de beneficios que aparecerán en pantalla.",
+            "Actúa como consultor de consultores. Vendo servicios High Ticket a [AVATAR]. Crea un guion de 60 segundos enfocado en diagnosticar un 'error silencioso que les cuesta miles de dólares'. Tono de máxima autoridad, analítico. CTA a auditoría por DM.",
+            "Analiza este tipo de contenido viral: [DESCRIBIR VIDEO VIRAL RECIENTE]. Desglosa en bullet points: Por qué funcionó psicológicamente, cuál fue el pico de interés, y dame un framework paso a paso para yo replicarlo en mi nicho de [NICHO].",
+            "He visto un video con esta estructura: [DESCRIBIR ESTRUCTURA]. Quiero que tomes ese esqueleto narrativo y construyas un guion de ventas nuevo para mi oferta de [OFERTA], manteniendo el ritmo pero cambiando el contexto a mi favor.",
+            "Utiliza el framework de 'Storytelling de Transición'. Redacta un texto para leer a cámara donde narro el momento exacto en que dejé de sufrir de [DOLOR] gracias a que descubrí [MÉTODO/SISTEMA]. Quiero que haya tensión emocional al inicio.",
+            "Escribe un guion de Venta Directa (Bottom of Funnel). No quiero educar ni dar valor gratis aquí. Quiero agitar el problema de [AVATAR], destruir a las soluciones alternativas, y presentar mi [OFERTA] como la única salida inteligente. Tono urgente y seguro.",
+            "Crea un guion enfocado 100% en Retención y Comunidad. El objetivo es que la gente comente su opinión. Abre con una verdad incómoda sobre [TEMA DEL NICHO], da mi postura radical, y devuelve la pregunta a la audiencia con un CTA a debate.",
+            "Necesito un guion rápido estilo 'Caballo de Troya'. Voy a regalar un [LEAD MAGNET / PLANTILLA / PDF] sobre [TEMA]. El guion debe vender la necesidad de usar esta plantilla y tener un CTA clarísimo para que comenten una palabra clave para enviárselo por automatización."
+        ];
+
+        const situations = [
+            {n:"1. Estoy en la playa/viaje", fmt:"B-roll storytelling, Micro reflexión, Metáfora visual.", hv:"Mar calmado / Pies en la arena / Caminando hacia el sol.", txt:"Cambiar de ambiente me hizo ver algo oscuro sobre mi negocio...", cta:"Respóndeme ESTRATEGIA si quieres que te ayude a verlo en el tuyo.", p:"Dame 3 textos reflexivos para poner sobre un B-roll estético de mis vacaciones, atando la desconexión con el crecimiento de mi negocio de [Nicho]."},
+            {n:"2. Estoy en cafetería", fmt:"Laptop + Café B-roll, Timelapse trabajando, Texto manuscrito digital.", hv:"Revolviendo el café / Dedos en el teclado rápido.", txt:"Mi rutina de 2 horas desde un café que factura más que 40h en oficina.", cta:"Guarda esto para implementarlo en tu próxima sesión de foco.", p:"Dame un guion para un Reel de 'Rutina de alto rendimiento' grabada desde una cafetería, demostrando autoridad."},
+            {n:"3. Estoy en mi cuarto (Poca luz)", fmt:"Faceless de pantalla de laptop, Grabar un audio reflexivo oscuro, Texto con fondo negro.", hv:"Solo se ve el brillo de la pantalla iluminando el cuarto oscuro.", txt:"Son las 2 am y necesito que escuches esto si estás estancado.", cta:"Envíale esto a tu socio o amigo emprendedor.", p:"Escribe un texto íntimo estilo 'Confesiones de madrugada' sobre los sacrificios ocultos en [Nicho]."},
+            {n:"4. Estoy en el carro", fmt:"POV Inmersivo, Vlog confesional rápido, Charla directa de alto valor.", hv:"Cámara en el volante o copiloto, luz de calle pasando.", txt:"Acabo de salir de una reunión y no puedo creer lo que escuché.", cta:"Si estás de acuerdo, deja un 💯 en los comentarios.", p:"Guion para un video grabado en el carro estilo 'Epifanía inmediata' tras una experiencia con un cliente de [Nicho]."},
+            {n:"5. No quiero mostrar rostro hoy", fmt:"Post-its en pared, Captura de pantalla analizada, Collage estético.", hv:"Mano pegando un post-it amarillo brillante.", txt:"3 Pasos que uso para resolver [Dolor] sin complicarme.", cta:"Guarda esta guía rápida de bolsillo.", p:"Dame una lista táctica de 3 pasos para [Objetivo] que pueda escribir en 3 post-its y grabar sin mostrar mi cara."},
+            {n:"6. Estoy cansada (Low Energy)", fmt:"Voz en off serena, Carrusel puro diseño, Compartir un tweet/pensamiento.", hv:"Texto minimalista sobre fondo beige o gris.", txt:"Si hoy te sientes quemada, esta es tu señal para soltar [Hábito tóxico].", cta:"Guarda esto para los días grises.", p:"Redacta un carrusel empático sobre cómo lidiar con el burnout en [Nicho] y por qué descansar es productivo."},
+            {n:"7. Hoy quiero VENDER", fmt:"Problema->Solución rápida, Diagnóstico de error, Caso de éxito duro.", hv:"Rostro serio, señalando un error en pantalla.", txt:"Deja de intentar [X]. Aquí está la razón de por qué no tienes clientes.", cta:"Últimos 2 lugares para mi programa. DM 'APLICAR'.", p:"Guion Bottom of funnel directo: Agita el problema, destruye alternativas, vende mi [Oferta]. Cero rodeos."},
+            {n:"8. Hoy quiero conectar (Comunidad)", fmt:"Respuesta a hater/pregunta, Preguntas incómodas, Storytelling personal.", hv:"Sticker gigante de una objeción de tu audiencia.", txt:"Alguien me preguntó esto y me dejó pensando horas...", cta:"¿Tú qué opinas? Te leo abajo.", p:"Dame una pregunta filosófica profunda sobre [Nicho] para debatir sanamente con mi audiencia en comentarios."},
+            {n:"9. Hoy no sé qué publicar", fmt:"10 Ideas rápidas, Mito vs Verdad, Reacción a contenido antiguo tuyo.", hv:"Lista desplazándose muy rápido (efecto visual).", txt:"10 Cosas que implementaría hoy si volviera a empezar de cero.", cta:"Guarda esto, literalmente vale oro.", p:"Hazme una lista de 10 tácticas precisas y valiosas sobre [TEMA] que pueda grabar leyendo rápidamente."},
+            {n:"10. Tengo baja de views", fmt:"Acción + Tiempo = Resultado, Polémica suave, Nunca le enseñes esto a X.", hv:"Cronómetro gigante bajando de 60 segundos.", txt:"Te enseño a lograr [X] en los próximos 10 minutos.", cta:"Guarda y aplica YA.", p:"Escribe un guion diseñado 100% para la retención, prometiendo una victoria ultra rápida en [Nicho]."},
+            {n:"11. Tengo un testimonio nuevo", fmt:"Caso Cliente -> Acción -> Resultado, Antes/Después.", hv:"Captura de pantalla de WhatsApp del cliente llorando/feliz.", txt:"Cómo [Nombre] rompió el techo de facturación en 30 días.", cta:"Agenda tu auditoría si quieres ser el próximo caso.", p:"Estructura este testimonio de un cliente en una historia tipo 'El viaje del héroe' resaltando cómo mi método fue la clave."},
+            {n:"12. Tengo un producto nuevo", fmt:"Producto en Uso ASMR, Barato vs Premium, Empacando primera orden.", hv:"Rompiendo el sello de la caja con sonido crujiente.", txt:"Por fin está aquí. Y es mejor de lo que imaginamos.", cta:"Link en bio. Stock muy limitado por lanzamiento.", p:"Dame 3 secuencias de B-roll ASMR para presentar estéticamente el lanzamiento de mi nuevo [Producto]."},
+            {n:"13. Salí de llamada con cliente", fmt:"Esto haría si fuera tú (Playbook), Señales de un problema, Vlog.", hv:"Cerrando la laptop fuerte o suspirando.", txt:"Acabo de auditar un negocio y cometían este error mortal.", cta:"Mándame tu caso y te digo si tienes este error.", p:"Guion estilo consultor: Revela un error que acabo de detectar en un cliente privado de [Nicho] y cómo solucionarlo."},
+            {n:"14. Estoy preparando pedidos", fmt:"Time-lapse empacando, Voz en off agradeciendo, Detrás de cámaras rudo.", hv:"Cámara rápida montando 20 cajas.", txt:"El lado feo y hermoso de tener una marca física.", cta:"Comenta tu número de orden y la empaquemos en video.", p:"Narrativa para voz en off sobre un video empacando, enfocada en los valores y el sacrificio de mi marca artesanal."},
+            {n:"15. Estoy en evento/networking", fmt:"Vlog dinámico, Entrevistas rápidas a otros, Aprendizaje top del evento.", hv:"Paneo rápido de la multitud y escenario.", txt:"Pagué $5,000 para entrar aquí y este es el mejor secreto que escuché.", cta:"Comparte esto con tu equipo.", p:"Estructura de Vlog de 60s documentando mi aprendizaje más valioso tras asistir a un mastermind de élite de [Nicho]."},
+            {n:"16. Estoy de viaje", fmt:"B-roll estético de hotel/avión + Reflexión, POV Inmersivo de lujo.", hv:"Vista desde la ventana del avión despegando.", txt:"Por qué viajar en primera clase (o invertir en ti) cambió mi negocio.", cta:"Guarda el audio para decretarlo.", p:"Texto reflexivo para video Faceless atando la experiencia de un viaje inspirador con una lección de mindset de negocios."}
+        ];
+
+        const errorsDB = {
+            "Errores de hooks": [
+                "Usar saludos ('Hola chicos, ¿cómo están?'). Pierdes el 60% de la retención en el seg 1.",
+                "Poner bloques de texto gigante que tapan la cara o se cortan por la UI de TikTok.",
+                "No tener movimiento visual en los primeros 3 segundos (estatismo mortal).",
+                "Prometer algo extremo en el hook (clickbait) que el video no resuelve.",
+                "Usar frases cliché como '3 tips para...' o 'Acompáñame a...'."
+            ],
+            "Errores de CTA": [
+                "Usar CTAs múltiples confusos ('Dale like, comenta, guarda, comparte y ve a mi bio'). El cerebro se paraliza.",
+                "No decir claramente qué hacer al final. Cerrar el video con un 'gracias'.",
+                "Pedir compra directa a tráfico frío que aún no confía en ti.",
+                "Usar palabras clave raras o difíciles de escribir para automatizaciones.",
+                "Poner el CTA cuando el video ya es aburrido y el 90% se fue."
+            ],
+            "Errores de venta": [
+                "Vender características técnicas ('tiene 10 módulos y 4 pdfs') en lugar de la transformación de identidad.",
+                "Hacer la oferta sin haber construido contexto o dolor previo.",
+                "No mostrar prueba social de manera natural (parece que nadie te compra).",
+                "Ignorar las objeciones de precio o tiempo por miedo a mencionarlas.",
+                "Tratar de venderle a todos en lugar de polarizar a tu cliente ideal."
+            ],
+            "Errores ecommerce": [
+                "Mostrar tu producto como un catálogo de supermercado (aburrido y sin vida).",
+                "No mostrar a un humano usándolo (neuronas espejo desactivadas).",
+                "Iluminación terrible que hace que un producto premium se vea barato.",
+                "Ignorar las dudas operativas clave en los videos (ej. no decir si estira, no mostrar texturas).",
+                "No usar llamadas a la urgencia ética (escasez real)."
+            ],
+            "Errores high ticket": [
+                "Competir por precio y descuentos (destruye tu posicionamiento premium).",
+                "No mostrar tu 'cocina interna' o metodología, viéndote como uno más.",
+                "Falta de autoridad en la postura, voz y entorno visual de grabación.",
+                "Aceptar a clientes tóxicos solo por dinero (arruina tus casos de éxito).",
+                "Cerrar las ventas mandando un link de pago directo en lugar de cualificar por llamada/DM conversacional."
+            ],
+            "Errores faceless": [
+                "Poner paredes de texto larguísimas que desaparecen en 2 segundos.",
+                "Usar clips de stock genéricos que ya usaron 100 cuentas más.",
+                "No aplicar un filtro oscuro o estético a los videos (se ve desordenado).",
+                "Olvidar la importancia brutal del sonido ambiente o música (el Faceless vive del audio).",
+                "No usar un hook visual textual lo suficientemente grande en el centro de la pantalla."
+            ]
+        };
+
+        const glossaryDB = [
+            {t:"Hook visual", d:"Lo que ocurre físicamente en pantalla en los primeros 3 segundos para detener el pulgar (movimiento, cambio de plano, objeto llamativo)."},
+            {t:"Hook textual", d:"El título escrito y anclado en pantalla que genera curiosidad o expone un dolor inmediato."},
+            {t:"Hook verbal", d:"Las primeras 10 palabras que salen de tu boca. Deben alinear con el texto pero aportar contexto extra."},
+            {t:"Pico de interés", d:"Un micro-evento a la mitad del video (una transición de sonido, cambio de ángulo, frase disruptiva) diseñado para 'despertar' al espectador que está a punto de hacer scroll."},
+            {t:"CTA suave", d:"Llamado a la acción enfocado en el algoritmo (Guardar, Compartir, Like). No busca venta inmediata, busca alcance y nutrición."},
+            {t:"CTA fuerte", d:"Llamado a la acción enfocado en conversión (DM, Compra, Agendar). Mueve al lead de la red social a tu ecosistema privado."},
+            {t:"Storytelling", d:"El arte de empaquetar una lección de negocios dentro de una narrativa humana (conflicto, lucha, resolución) para eludir el sistema lógico y conectar emocionalmente."},
+            {t:"Prueba social", d:"Demostración empírica de que otras personas ya confían en ti (testimonios, capturas de transferencias, B-roll en eventos llenos)."},
+            {t:"Lead magnet", d:"Un recurso gratuito de alto valor percibido (plantilla, guía, masterclass) que regalas a cambio del contacto (email/DM) del cliente potencial."},
+            {t:"Faceless", d:"Estrategia de creación de contenido altamente estético donde el creador nunca muestra su rostro, apalancándose en texto, B-roll y audio."},
+            {t:"UGC", d:"User Generated Content. Contenido creado por clientes reales (o creadores contratados) que muestran tu producto de forma casera y auténtica, ideal para anuncios de Ecommerce."},
+            {t:"Formato de valor", d:"Contenido diseñado puramente para educar, nutrir y generar guardados. Posiciona tu autoridad técnica (MoF)."},
+            {t:"Formato de venta", d:"Contenido agresivo y directo diseñado para cualificar y extraer leads calientes hacia tu oferta (BoF)."},
+            {t:"Formato viral", d:"Contenido diseñado para masas, altamente simplificado, enfocado en alcance, shares y atracción de nuevos ojos (ToF)."},
+            {t:"Sistema E.N.C.", d:"Enganche (Hook), Nutrición (Desarrollo del valor), Cierre (CTA). La santísima trinidad estructural de un Reel ganador."},
+            {t:"Retención", d:"La capacidad de mantener al usuario viendo tu video sin que haga swipe. La métrica reina de las redes actuales."},
+            {t:"Watch time", d:"El tiempo total en segundos/horas que los usuarios han consumido de tu contenido. A mayor watch time, más preferencia del algoritmo."},
+            {t:"Objeción", d:"La creencia limitante o excusa lógica que pone un cliente para no comprarte (precio, tiempo, confianza). Tu contenido debe destruirlas preventivamente."},
+            {t:"Autoridad", d:"Percepción psicológica de que eres el líder alfa y experto indiscutible en tu nicho. Quien tiene autoridad, no ruega por ventas; elige a sus clientes."},
+            {t:"Comunidad", d:"Grupo de personas unidas por una filosofía de marca compartida, no solo por un producto. Son tus defensores a largo plazo."},
+            {t:"Conversión", d:"El arte de transformar un simple 'viewer' (espectador) en un lead calificado o cliente de pago."},
+            {t:"Lifestyle estratégico", d:"Mostrar tu estilo de vida (viajes, lujos, tranquilidad) no por ego, sino como prueba irrefutable de que tus métodos funcionan."}
+        ];
+
+        /* =======================================================================
+           RENDER FUNCTIONS (Generación Dinámica del DOM)
+           ======================================================================= */
+        
+        function renderVideoFormats() {
+            const grid = document.getElementById('grid-video-formats');
+            grid.innerHTML = videoFormats.map(item => `
+                <div class="data-card">
+                    <span class="card-tag">${item.c}</span>
+                    <h4>${item.n}</h4>
+                    <div class="meta">
+                        <p><strong>Objetivo:</strong> ${item.o}</p>
+                        <p><strong>Dificultad:</strong> ${item.d}</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-gold btn-sm" onclick="openFormatModal(${videoFormats.indexOf(item)}, 'video')">Ver Estructura</button>
+                        <button class="btn btn-outline btn-sm" onclick="copyText('${item.p.replace(/'/g, "\\'")}')">Copiar Prompt</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderObjectives() {
+            const acc = document.getElementById('acc-objectives');
+            const data = [
+                {t:"Quiero Vender (BoF)", p:"Problema → Solución rápida, Diagnóstico de error caro, Caso de cliente, Antes vs Después, Método antiguo vs Nuevo."},
+                {t:"Quiero Viralizar (ToF)", p:"Acción + Tiempo = Resultado, Bad vs Good vs Excellent, Qué pasaría si, Nunca le enseñes esto a X, Miedos graciosos."},
+                {t:"Quiero Educar (Autoridad)", p:"A + B = C, Pregunta en pizarra, Hábitos invisibles, Explicación para 5 años, Categoría A vs B."},
+                {t:"Quiero Conectar (Comunidad)", p:"Historia personal, Respuesta a mensaje polémico, POV inmersivo, Preguntas incómodas, B-roll storytelling."},
+                {t:"Quiero Captar Leads (Lead Magnet)", p:"Caballo de Troya (Regalo + CTA a DM), Tutorial rápido con recurso descargable, 10 ideas (la #10 en mi guía)."},
+                {t:"Quiero Contenido Sin Rostro", p:"Faceless clips + texto, Soluciones con Post-its, Carrusel App x App, B-roll estético, Metáfora visual con objetos."}
+            ];
+            acc.innerHTML = data.map(d => `
+                <div class="accordion">
+                    <div class="accordion-head" onclick="toggleAccordion(this)">
+                        <span>${d.t}</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <p style="margin-bottom: 10px;"><strong>Formatos recomendados:</strong><br>${d.p}</p>
+                        <button class="btn btn-sm btn-outline" onclick="copyText('${d.p}')">Copiar Lista</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderEcommerce() {
+            const grid = document.getElementById('grid-ecommerce');
+            grid.innerHTML = ecommerceFormats.map((item, idx) => `
+                <div class="data-card">
+                    <span class="card-tag">Ecommerce</span>
+                    <h4>${item.n}</h4>
+                    <div class="meta">
+                        <p><strong>Cuándo usar:</strong> ${item.w}</p>
+                        <p><strong>Hook:</strong> ${item.h}</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-gold btn-sm" onclick="openFormatModal(${idx}, 'ecom')">Ver Detalles</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderHighTicket() {
+            const grid = document.getElementById('grid-highticket');
+            grid.innerHTML = htFormats.map((item, idx) => `
+                <div class="data-card">
+                    <span class="card-tag">High Ticket</span>
+                    <h4>${item.n}</h4>
+                    <div class="meta">
+                        <p><strong>Objetivo:</strong> ${item.o}</p>
+                        <p><strong>Hook:</strong> ${item.h}</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-gold btn-sm" onclick="openFormatModal(${idx}, 'ht')">Ver Detalles</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderFaceless() {
+            const grid = document.getElementById('grid-faceless');
+            grid.innerHTML = facelessFormats.map((item, idx) => `
+                <div class="data-card">
+                    <span class="card-tag">Faceless</span>
+                    <h4>${item.n}</h4>
+                    <div class="meta">
+                        <p><strong>Dirección:</strong> ${item.r}</p>
+                        <p><strong>Hook text:</strong> ${item.h}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderListDB(elementId, dataObj) {
+            const el = document.getElementById(elementId);
+            let html = '';
+            for (const [cat, items] of Object.entries(dataObj)) {
+                let itemsHtml = items.map(t => `
+                    <div class="copy-row">
+                        <span class="copy-text">"${t}"</span>
+                        <button class="btn btn-sm btn-outline" onclick="copyText('${t.replace(/'/g, "\\'")}')">Copiar</button>
+                    </div>
+                `).join('');
+                html += `
+                    <div class="accordion">
+                        <div class="accordion-head" onclick="toggleAccordion(this)">
+                            <span>${cat}</span><span>▼</span>
+                        </div>
+                        <div class="accordion-body">${itemsHtml}</div>
+                    </div>
+                `;
+            }
+            el.innerHTML = html;
+        }
+
+        function renderStructures() {
+            const acc = document.getElementById('acc-structures');
+            acc.innerHTML = structuresDB.map(s => `
+                <div class="accordion">
+                    <div class="accordion-head" onclick="toggleAccordion(this)">
+                        <span>${s.n}</span><span>▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <p style="margin-bottom:8px; color:var(--gold-main);"><strong>${s.p}</strong></p>
+                        <p style="margin-bottom:15px; font-size:0.85rem;"><em>Ideal para: ${s.w}</em></p>
+                        <div style="background:var(--bg-main); padding:1rem; border-radius:8px; white-space:pre-line; font-family:monospace; margin-bottom:15px;">${s.s}</div>
+                        <button class="btn btn-sm btn-gold" onclick="copyText('${s.s.replace(/\n/g, "\\n").replace(/'/g, "\\'")}')">Copiar Estructura</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPrompts() {
+            const acc = document.getElementById('acc-prompts');
+            acc.innerHTML = promptsIA.map((p, idx) => `
+                <div class="accordion">
+                    <div class="accordion-head" onclick="toggleAccordion(this)">
+                        <span>Prompt Maestro #${idx+1}</span><span>▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="prompt-box" id="p-box-${idx}">${p}</div>
+                        <button class="btn btn-sm btn-gold" onclick="copyText(document.getElementById('p-box-${idx}').innerText)">Copiar Prompt</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderSituations() {
+            const grid = document.getElementById('grid-situations');
+            grid.innerHTML = situations.map((s, idx) => `
+                <div class="data-card" style="align-items:center; text-align:center; cursor:pointer;" onclick="openSituationModal(${idx})">
+                    <h4 style="margin:0;">${s.n}</h4>
+                </div>
+            `).join('');
+        }
+
+        function renderGlossary() {
+            const acc = document.getElementById('acc-glossary');
+            acc.innerHTML = glossaryDB.map(g => `
+                <div class="accordion">
+                    <div class="accordion-head" onclick="toggleAccordion(this)">
+                        <span>${g.t}</span><span>▼</span>
+                    </div>
+                    <div class="accordion-body">
+                        <p>${g.d}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // INIT ALL CONTENT
+        function initApp() {
+            renderVideoFormats();
+            renderObjectives();
+            renderEcommerce();
+            renderHighTicket();
+            renderFaceless();
+            renderListDB('acc-hooks', hooksDB);
+            renderListDB('acc-ctas', ctasDB);
+            renderListDB('acc-visual-hooks', visualHooksDB);
+            renderListDB('acc-peaks', peaksDB);
+            renderStructures();
+            renderPrompts();
+            renderSituations();
+            renderListDB('acc-errors', errorsDB);
+        }
+
+        /* =======================================================================
+           UI INTERACTION LOGIC
+           ======================================================================= */
+        
+        function openSection(id) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            // Hide hero/hub logic for clean view
+            document.getElementById('hero').style.display = 'none';
+            document.getElementById('hub').style.display = 'none';
+            // Show target
+            const target = document.getElementById(id);
+            target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeSection() {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('hero').style.display = 'block';
+            document.getElementById('hub').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleAccordion(element) {
+            const parent = element.parentElement;
+            parent.classList.toggle('open');
+        }
+
+        // Modals
+        function openFormatModal(idx, type) {
+            let data;
+            if (type === 'video') data = videoFormats[idx];
+            if (type === 'ecom') {
+                const e = ecommerceFormats[idx];
+                data = makeFmt(e.n, "Ecommerce", "Variada", "Vender producto físico", "Ecommerce", e.w, "Generación de deseo visual y urgencia dopaminérgica.", e.r, e.h, e.h, "N/A (ASMR)", "1. Hook visual\n2. Desarrollo\n3. Resultado\n4. CTA", e.c, e.p, e.e, "Mala iluminación o aburrir.");
+            }
+            if (type === 'ht') {
+                const h = htFormats[idx];
+                data = makeFmt(h.n, "High Ticket", "Avanzada", h.o, "Coaches, B2B", h.w, "Filtro de autoridad y mitigación de riesgo.", "Tono consultivo, entorno premium.", "Visual asociado al dolor o autoridad.", h.h, h.h, "1. Hook\n2. Agitar problema\n3. Reencuadre\n4. Solución\n5. Cualificación CTA", h.c, h.p, h.e, "Sonar arrogante o desesperado por vender.");
+            }
+
+            document.getElementById('fm-title').innerText = data.n;
+            document.getElementById('fm-cat').innerText = data.c;
+            document.getElementById('fm-obj').innerText = data.o;
+            document.getElementById('fm-idl').innerText = data.i;
+            document.getElementById('fm-dif').innerText = data.d;
+            document.getElementById('fm-whe').innerText = data.w;
+            document.getElementById('fm-psy').innerText = data.psy;
+            document.getElementById('fm-rec').innerText = data.r;
+            document.getElementById('fm-hv').innerText = data.hv;
+            document.getElementById('fm-ht').innerText = data.ht;
+            document.getElementById('fm-hb').innerText = data.hb;
+            document.getElementById('fm-str').innerText = data.s;
+            document.getElementById('fm-cta').innerText = data.cta;
+            document.getElementById('fm-ej').innerText = data.ej;
+            document.getElementById('fm-err').innerText = data.err;
+            document.getElementById('fm-prm').innerText = data.p;
+
+            document.getElementById('formatModal').classList.add('active');
+        }
+
+        function openSituationModal(idx) {
+            const s = situations[idx];
+            document.getElementById('sm-title').innerText = s.n;
+            document.getElementById('sm-fmt').innerHTML = `<li>${s.fmt}</li>`;
+            document.getElementById('sm-hv').innerText = s.hv;
+            document.getElementById('sm-txt').innerText = s.txt;
+            document.getElementById('sm-cta').innerText = s.cta;
+            document.getElementById('sm-prm').innerText = s.p;
+            
+            document.getElementById('sitModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Copy functionality
+        function showToast() {
+            const t = document.getElementById('toast');
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
+        }
+
+        function copyText(text) {
+            // Manejo de saltos de línea para el portapapeles
+            const decodedText = text.replace(/\\n/g, '\n');
+            const temp = document.createElement("textarea");
+            temp.value = decodedText;
+            document.body.appendChild(temp);
+            temp.select();
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                console.error('Error al copiar', err);
+            }
+            document.body.removeChild(temp);
+        }
+
+        // Builder Logic
+        function buildFormula() {
+            const obj = document.getElementById('b-obj').value;
+            const fmt = document.getElementById('b-fmt').value;
+            const eng = document.getElementById('b-eng').value;
+            const cta = document.getElementById('b-cta').value;
+
+            document.getElementById('r-fmt').innerText = `${fmt} con energía ${eng}`;
+            document.getElementById('r-hvis').innerText = "Acorde al formato visual. Si es Faceless (B-roll estético), si es a cámara (Corte directo a los ojos).";
+            document.getElementById('r-htex').innerText = `Texto ancla centrado en el dolor para el objetivo de ${obj.toLowerCase()}.`;
+            document.getElementById('r-hver').innerText = `Voz enérgica/directa conectando con el texto.`;
+            document.getElementById('r-str').innerText = "1. Hook disruptivo\n2. Pico de interés (Contexto)\n3. Aporte táctico/Dolor\n4. Resolución\n5. CTA";
+            document.getElementById('r-cta').innerText = cta;
+            
+            const prompt = `Actúa como Estratega de Contenidos Premium.
+Objetivo del video: ${obj}.
+Formato visual: ${fmt}.
+Tono de marca: ${eng}.
+Llamado a la acción: Que la persona termine haciendo: '${cta}'.
+
+Genera 3 ideas de guion paso a paso usando neuroventas para este formato exacto, aplicadas a mi nicho. Incluye dirección visual de los primeros 3 segundos, texto en pantalla y el guion narrado.`;
+            
+            document.getElementById('r-prompt').innerText = prompt;
+            
+            const resultBox = document.getElementById('builder-result');
+            resultBox.style.display = 'block';
+            resultBox.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+        }
+
+        // Run Init
+        window.onload = initApp;
+
+    </script>
+</body>
+</html>
