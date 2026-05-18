@@ -2164,12 +2164,16 @@ Incluye:
 Debe mostrar el valor invisible detrás de cada pedido.`
 ];
 
-ecommerceFormats.forEach((item, index) => {
-  const newPrompt = upgradedEcommercePrompts[index];
-  if (!newPrompt) return;
+function upgradeEcommercePrompts() {
+  ecommerceFormats.forEach((item, index) => {
+    const newPrompt = upgradedEcommercePrompts[index];
+    if (!newPrompt) return;
 
-  item.p = newPrompt;
-});
+    item.p = newPrompt;
+  });
+}
+
+upgradeEcommercePrompts();
         // Compact High Ticket Data (15 formats)
         const htFormats = [
             {n:"1. Diagnóstico Error Caro", o:"Generar consciencia de pérdida.", w:"MoF, calentar leads.", h:"El error que te cuesta [Dinero] al mes.", c:"DM 'AUDITORÍA'.", p:"Crea guion de diagnóstico de un error estratégico profundo en [Nicho].", e:"No tener backend de ventas."},
@@ -2548,6 +2552,7 @@ ecommerceFormats.forEach((item, index) => {
         function initApp() {
             renderVideoFormats();
             renderObjectives();
+            upgradeEcommercePrompts();
             renderEcommerce();
             renderHighTicket();
             renderFaceless();
