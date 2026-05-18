@@ -3001,7 +3001,77 @@ function openGlossary() {
     }
   }, 50);
 }
-        function openNewFormatLab() {
+      const newFormatAnalysisPrompt = `PROMPT 1 - ANALIZAR UN VIDEO VIRAL
+
+Actúa como estratega de contenido viral y analista de formatos.
+
+VIDEO A ANALIZAR:
+[PEGA AQUÍ EL LINK, TRANSCRIPCIÓN O DESCRIPCIÓN DEL VIDEO]
+
+NICHO:
+[NICHO]
+
+AUDIENCIA:
+[AUDIENCIA]
+
+Analiza el video y extrae:
+1. Hook visual del primer segundo.
+2. Hook textual si aparece texto en pantalla.
+3. Hook verbal si la persona habla.
+4. Estructura narrativa paso a paso.
+5. Duración aproximada de cada parte.
+6. Picos de interés.
+7. Patrón psicológico que hace que funcione.
+8. Emoción que activa: curiosidad, deseo, identificación, urgencia, humor, autoridad o controversia.
+9. CTA usado o CTA sugerido.
+10. Qué elementos son replicables y cuáles dependen del creador original.
+
+No copies el contenido literal. Extrae la estructura estratégica del formato.`;
+
+const newFormatAdaptationPrompt = `PROMPT 2 - CONVERTIR EL ANÁLISIS EN FORMATO REUTILIZABLE
+
+Actúa como estratega de contenido y creador de formatos virales.
+
+ANÁLISIS DEL VIDEO:
+[PEGA AQUÍ EL ANÁLISIS DEL PROMPT 1]
+
+MI NICHO:
+[NICHO]
+
+MI AUDIENCIA:
+[AUDIENCIA]
+
+MI OFERTA / PRODUCTO:
+[OFERTA O PRODUCTO]
+
+TEMA O IDEA BASE:
+[PEGA AQUÍ TU TEMA]
+
+OBJETIVO DEL CONTENIDO:
+[VENDER / EDUCAR / VIRALIZAR / CONECTAR / CAPTAR LEADS]
+
+Convierte ese análisis en un formato reutilizable para mi negocio.
+
+Entrega:
+1. Nombre del nuevo formato.
+2. Qué es.
+3. Para qué objetivo sirve.
+4. Ideal para qué tipo de negocio.
+5. Cuándo usarlo.
+6. Por qué funciona psicológicamente.
+7. Cómo grabarlo.
+8. Hook visual adaptable.
+9. Hook textual adaptable.
+10. Hook verbal adaptable.
+11. Estructura narrativa paso a paso.
+12. CTA recomendado.
+13. 5 ideas aplicadas a mi nicho.
+14. 3 versiones del guion: educativa, venta y viral.
+15. Errores a evitar.
+
+No copies el video original. Crea una versión estratégica, ética y adaptada a mi marca.`;
+
+function openNewFormatLab() {
   let section = document.getElementById("sec-new-format-lab");
 
   if (!section) {
@@ -3011,6 +3081,54 @@ function openGlossary() {
     section.className = "content-section";
     main.appendChild(section);
   }
+
+  section.innerHTML = `
+    <div class="container">
+      <div class="section-label">Laboratorio de Tendencias</div>
+      <h2 class="section-title">Adapta cualquier formato nuevo</h2>
+      <p class="section-sub">Analiza un video viral, extrae su estructura y conviértelo en un formato reutilizable para tu nicho.</p>
+
+      <div class="prompt-lab-grid">
+        <div class="prompt-lab-card">
+          <div class="prompt-lab-step">Paso 1</div>
+          <h3>Analiza el video viral</h3>
+          <p>Pega este prompt en Gemini junto con el link, descripción o transcripción del video.</p>
+          <pre id="analysisPromptBox"></pre>
+          <button class="btn btn-primary" id="copyAnalysisPrompt">Copiar prompt 1</button>
+        </div>
+
+        <div class="prompt-lab-card">
+          <div class="prompt-lab-step">Paso 2</div>
+          <h3>Convierte el análisis en formato</h3>
+          <p>Usa este segundo prompt para convertir el análisis en un formato adaptable.</p>
+          <pre id="adaptationPromptBox"></pre>
+          <button class="btn btn-primary" id="copyAdaptationPrompt">Copiar prompt 2</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("analysisPromptBox").textContent = newFormatAnalysisPrompt;
+  document.getElementById("adaptationPromptBox").textContent = newFormatAdaptationPrompt;
+
+  document.getElementById("copyAnalysisPrompt").onclick = function() {
+    copyText(newFormatAnalysisPrompt);
+  };
+
+  document.getElementById("copyAdaptationPrompt").onclick = function() {
+    copyText(newFormatAdaptationPrompt);
+  };
+
+  if (typeof openSection === "function") {
+    openSection("sec-new-format-lab");
+  } else {
+    section.style.display = "block";
+  }
+
+  setTimeout(() => {
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 50);
+}
 
   const analysisPrompt = `PROMPT 1 - ANALIZAR UN VIDEO VIRAL
 
