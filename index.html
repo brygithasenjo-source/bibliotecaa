@@ -264,6 +264,13 @@
 #glosario.glosario-visible {
   display: block;
 }
+        #glosario {
+  display: none !important;
+}
+
+#glosario.glosario-visible {
+  display: block !important;
+}
     </style>
 </head>
 <body>
@@ -2841,8 +2848,7 @@ Genera 3 ideas de guion paso a paso usando neuroventas para este formato exacto,
         }
 
         // Run Init
-        window.onload = initApp;
-function forceRenderGlossary() {
+        function forceRenderGlossary(show = false) {
   let section = document.getElementById("glosario");
 
   if (!section) {
@@ -2882,24 +2888,38 @@ function forceRenderGlossary() {
       <div class="gloss-def">${g.def || ""}</div>
     </div>
   `).join("");
+
+  if (show) {
+    section.classList.add("glosario-visible");
+    section.style.display = "block";
+  } else {
+    section.classList.remove("glosario-visible");
+    section.style.display = "none";
+  }
 }
 
 function openGlossary() {
-  forceRenderGlossary();
+  forceRenderGlossary(true);
 
   const section = document.getElementById("glosario");
   if (!section) return;
 
-  section.classList.add("glosario-visible");
   section.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-document.querySelectorAll('a[href="#glosario"]').forEach(link => {
-  link.addEventListener("click", function(e) {
+window.onload = function() {
+  initApp();
+
+  forceRenderGlossary(false);
+
+  document.addEventListener("click", function(e) {
+    const glossaryLink = e.target.closest('a[href="#glosario"]');
+    if (!glossaryLink) return;
+
     e.preventDefault();
     openGlossary();
   });
-});
+};
     </script>
 </body>
 </html>
