@@ -170,6 +170,42 @@
             .modal-footer { flex-direction: column; }
             .btn { width: 100%; }
         }
+        .gloss-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.gloss-item {
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(200,164,77,0.1);
+}
+
+.gloss-level {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.gloss-term {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.gloss-def {
+  font-size: 0.8rem;
+  color: var(--gray);
+  line-height: 1.5;
+}
     </style>
 </head>
 <body>
@@ -2748,7 +2784,50 @@ Genera 3 ideas de guion paso a paso usando neuroventas para este formato exacto,
 
         // Run Init
         window.onload = initApp;
+function forceRenderGlossary() {
+  let section = document.getElementById("glosario");
 
+  if (!section) {
+    const footer = document.querySelector("footer");
+    section = document.createElement("section");
+    section.id = "glosario";
+    section.innerHTML = `
+      <div class="container">
+        <div class="section-label">Vocabulario</div>
+        <h2 class="section-title">Glosario Prime Scale</h2>
+        <p class="section-sub">Términos de creación de contenido organizados por nivel: desde lo básico para emprendedores hasta conceptos estratégicos para negocios consolidados.</p>
+        <div class="gloss-grid" id="glossGrid"></div>
+      </div>
+    `;
+
+    if (footer) {
+      document.body.insertBefore(section, footer);
+    } else {
+      document.body.appendChild(section);
+    }
+  }
+
+  let grid = document.getElementById("glossGrid");
+
+  if (!grid) {
+    const container = section.querySelector(".container") || section;
+    grid = document.createElement("div");
+    grid.className = "gloss-grid";
+    grid.id = "glossGrid";
+    container.appendChild(grid);
+  }
+
+  grid.innerHTML = glossaryData.map(g => `
+    <div class="gloss-item">
+      <div class="gloss-level">${g.level || ""} · ${g.tag || ""}</div>
+      <div class="gloss-term">${g.term || ""}</div>
+      <div class="gloss-def">${g.def || ""}</div>
+    </div>
+  `).join("");
+}
+
+document.addEventListener("DOMContentLoaded", forceRenderGlossary);
+forceRenderGlossary();
     </script>
 </body>
 </html>
