@@ -865,15 +865,7 @@ No copies el video original. Crea una versión estratégica, ética y adaptada a
     </div>
 
     <div class="toast" id="toast">Copiado al portapapeles ✨</div>
-<section id="glosario">
-  <div class="container">
-    <div class="section-label">Vocabulario</div>
-    <h2 class="section-title">Glosario Prime Scale</h2>
-    <p class="section-sub">Términos de creación de contenido organizados por nivel: desde lo básico para emprendedores hasta conceptos estratégicos para negocios consolidados.</p>
 
-    <div class="gloss-grid" id="glossGrid"></div>
-  </div>
-</section>
     <footer>
         <img src="https://i.ibb.co/NdfBXTyC/Chat-GPT-Image-14-may-2026-01-35-23-p-m.png" alt="Prime Scale Logo">
         <p>Biblioteca creada para transformar ideas en contenido estratégico, viral y vendible.</p>
@@ -2837,17 +2829,21 @@ upgradeEcommercePrompts();
             `).join('');
         }
 
-        function renderGlossary() {
-  const grid = document.getElementById("glossGrid");
-  if (!grid) return;
+       function renderGlossary() {
+  const container = document.getElementById("acc-glossary");
+  if (!container) return;
 
-  grid.innerHTML = glossaryData.map(g => `
-    <div class="gloss-item">
-      <div class="gloss-level">${g.level || ""} · ${g.tag || ""}</div>
-      <div class="gloss-term">${g.term || ""}</div>
-      <div class="gloss-def">${g.def || ""}</div>
+  container.innerHTML = `
+    <div class="gloss-grid">
+      ${glossaryData.map(g => `
+        <div class="gloss-item">
+          <div class="gloss-level">${g.level || ""} · ${g.tag || ""}</div>
+          <div class="gloss-term">${g.term || ""}</div>
+          <div class="gloss-def">${g.def || ""}</div>
+        </div>
+      `).join("")}
     </div>
-  `).join("");
+  `;
 }
 
         // INIT ALL CONTENT
