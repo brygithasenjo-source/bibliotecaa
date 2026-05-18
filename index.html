@@ -264,9 +264,7 @@
 #glosario.glosario-visible {
   display: block;
 }
-        #glosario {
-  display: none !important;
-}
+    
 
 #glosario.glosario-visible {
   display: block !important;
@@ -380,10 +378,10 @@
                 <p>Lo que destruye tu conversión</p>
             </div>
             <div class="hub-card" onclick="openGlossary()">
-                <div class="hub-icon">📖</div>
-                <h3>15. Glosario</h3>
-                <p>Diccionario de términos Prime Scale</p>
-            </div>
+  <div class="hub-icon">📖</div>
+  <h3>15. Glosario</h3>
+  <p>Diccionario de términos Prime Scale</p>
+</div>
         </div>
     </main>
 
@@ -2898,28 +2896,52 @@ Genera 3 ideas de guion paso a paso usando neuroventas para este formato exacto,
   }
 }
 
-function openGlossary() {
-  forceRenderGlossary(true);
+function renderGlossaryInsideSection() {
+  let section = document.getElementById("sec-glossary");
 
-  const section = document.getElementById("glosario");
-  if (!section) return;
+  if (!section) {
+    const main = document.querySelector("main") || document.body;
+    section = document.createElement("section");
+    section.id = "sec-glossary";
+    section.className = "content-section";
+    main.appendChild(section);
+  }
 
-  section.scrollIntoView({ behavior: "smooth", block: "start" });
+  section.innerHTML = `
+    <div class="container">
+      <div class="section-label">Vocabulario</div>
+      <h2 class="section-title">Glosario Prime Scale</h2>
+      <p class="section-sub">Términos de creación de contenido organizados por nivel: desde lo básico para emprendedores hasta conceptos estratégicos para negocios consolidados.</p>
+      <div class="gloss-grid" id="glossGrid">
+        ${glossaryData.map(g => `
+          <div class="gloss-item">
+            <div class="gloss-level">${g.level || ""} · ${g.tag || ""}</div>
+            <div class="gloss-term">${g.term || ""}</div>
+            <div class="gloss-def">${g.def || ""}</div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
 }
 
-window.onload = function() {
-  initApp();
+function openGlossary() {
+  renderGlossaryInsideSection();
 
-  forceRenderGlossary(false);
+  if (typeof openSection === "function") {
+    openSection("sec-glossary");
+  } else {
+    const section = document.getElementById("sec-glossary");
+    if (section) section.style.display = "block";
+  }
 
-  document.addEventListener("click", function(e) {
-    const glossaryLink = e.target.closest('a[href="#glosario"]');
-    if (!glossaryLink) return;
-
-    e.preventDefault();
-    openGlossary();
-  });
-};
+  setTimeout(() => {
+    const section = document.getElementById("sec-glossary");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, 50);
+}
     </script>
 </body>
 </html>
